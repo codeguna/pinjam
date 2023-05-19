@@ -1,4 +1,7 @@
 <?php
+
+use App\Http\Controllers\GoogleController;
+
 Route::redirect('/', 'admin/home');
 
 Auth::routes(['register' => false]);
@@ -16,3 +19,6 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
     Route::resource('users', 'Admin\UsersController');
     Route::delete('users_mass_destroy', 'Admin\UsersController@massDestroy')->name('users.mass_destroy');
 });
+
+Route::get('auth/google', [GoogleController::class, 'redirectToGoogle']);
+Route::get('auth/google/callback', [GoogleController::class, 'handleGoogleCallback']);
