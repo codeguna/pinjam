@@ -1,7 +1,7 @@
-@extends('layouts.app')
+@extends('layouts.dashboard')
 
-@section('template_title')
-    Parent
+@section('title')
+    Student Parents
 @endsection
 
 @section('content')
@@ -13,7 +13,7 @@
                         <div style="display: flex; justify-content: space-between; align-items: center;">
 
                             <span id="card_title">
-                                {{ __('Parent') }}
+                                Student Parents Data
                             </span>
 
                             <div class="float-right">
@@ -36,12 +36,10 @@
                                 <thead class="thead">
                                     <tr>
                                         <th>No</th>
-
-                                        <th>User Id</th>
+                                        <th>Nama</th>
                                         <th>Mobile</th>
                                         <th>Occupation</th>
                                         <th>Address</th>
-
                                         <th></th>
                                     </tr>
                                 </thead>

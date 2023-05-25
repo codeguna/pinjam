@@ -17,20 +17,22 @@ use Illuminate\Database\Eloquent\Model;
  */
 class ClassRoom extends Model
 {
-    
-    static $rules = [
-		'name' => 'required',
-    ];
 
-    protected $perPage = 20;
+  static $rules = [
+    'name' => 'required',
+  ];
 
-    /**
-     * Attributes that should be mass-assignable.
-     *
-     * @var array
-     */
-    protected $fillable = ['name'];
+  protected $perPage = 20;
 
+  /**
+   * Attributes that should be mass-assignable.
+   *
+   * @var array
+   */
+  protected $fillable = ['name'];
 
-
+  public function student()
+  {
+    return $this->hasMany('App\Models\Student');
+  }
 }

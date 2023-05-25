@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Student;
 use App\Models\StudentParent;
 use Illuminate\Http\Request;
 
@@ -105,5 +106,18 @@ class StudentParentController extends Controller
 
         return redirect()->route('admin.parents.index')
             ->with('success', 'Parent deleted successfully');
+    }
+
+    public function getProfile($id)
+    {
+        $parents    = StudentParent::where('user_id', $id)->first();
+        $students    = Student::where('parent_id', $parents->id)->first();
+
+        return view('parent.update-profile', compact('parents', 'students'));
+    }
+
+    public function updateProfile(Request $request)
+    {
+        return $request->all();
     }
 }

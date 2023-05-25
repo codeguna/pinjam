@@ -66,19 +66,19 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <!-- Notifications Dropdown Menu -->
                 <li class="nav-item dropdown">
                     <a class="nav-link" data-toggle="dropdown" href="#">
-                        <i class="far fa-bell"></i>
-                        <span class="badge badge-danger navbar-badge">0</span>
+                        <i class="fa fa-user-circle" aria-hidden="true"></i>
                     </a>
+                    @php
+                        $getId = Auth::user()->id;
+                    @endphp
                     <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                        <span class="dropdown-header">Notifications</span>
+                        <span class="dropdown-header">User Profile</span>
                         <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item">
-                            <i class="fas fa-envelope mr-2"></i> No new messages
-                            <span class="float-right text-muted text-sm">3 mins</span>
+                        <a href="{{ route('admin.parent.get-profile', $getId) }}" class="dropdown-item">
+                            <i class="fas fa-pencil-alt"></i> Update Profile
                         </a>
 
                         <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
                     </div>
                 </li>
                 <li class="nav-item">

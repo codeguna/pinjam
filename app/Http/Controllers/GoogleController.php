@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-
+use App\Models\Student;
+use App\Models\StudentParent;
 use Illuminate\Http\Request;
 use Laravel\Socialite\Facades\Socialite;
 use Exception;
@@ -49,8 +50,24 @@ class GoogleController extends Controller
                 ]);
 
                 Auth::login($newUser);
+                $getId = Auth::User()->id;
 
-                return redirect()->intended('dashboard');
+                $parents            = StudentParent::create([
+                    'user_id'       => $getId,
+                    'mobile'        => '000000000',
+                    'occupation'    => '==Update Pekerjaan==',
+                    'address'       => 'Update Alamat'
+                ]);
+
+                $students           = Student::create([
+                    'parent_id'      => $parents->id,
+                    'name'           => 'Update Nama',
+                    'nim'           => '000000000',
+                    'class_id'      => 1,
+                    'address'       => 'Update Alamat'
+                ]);
+
+                return redirect()->intended('admin/home');
             }
         } catch (Exception $e) {
             dd($e->getMessage());

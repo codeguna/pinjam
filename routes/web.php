@@ -28,6 +28,8 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
     // End of Route Loans
     // Route of Parents
     Route::resource('parents', 'StudentParentController');
+    Route::get('/parents/get-profile/{getId}', 'StudentParentController@getProfile')->name('parent.get-profile');
+    Route::post('/parents/update-profile', 'StudentParentController@updateProfile')->name('parent.update-profile');
     // End of Route Parents
     // Route of Students
     Route::resource('students', 'StudentController');
