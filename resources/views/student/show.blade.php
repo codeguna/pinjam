@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.dashboard')
 
 @section('template_title')
     {{ $student->name ?? "{{ __('Show') Student" }}

@@ -1,6 +1,6 @@
-@extends('layouts.app')
+@extends('layouts.dashboard')
 
-@section('template_title')
+@section('title')
     {{ __('Create') }} Loan
 @endsection
 

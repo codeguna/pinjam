@@ -11,7 +11,6 @@
                 <form action="{{ route('admin.parent.update-profile') }}" method="POST">
                     <div class="row">
                         @csrf
-                        <input type="hidden" name="user_id" value="{{ $parents->id }}">
                         <input type="hidden" name="parent_id" value="{{ $students->id }}">
 
                         <div class="col-md-6">
@@ -51,12 +50,12 @@
                             </div>
                             <div class="form-group">
                                 <label>Kelas</label>
-                                <input type="text" class="form-control" name="class_id"
-                                    value="{{ $students->classRoom->name }}" maxlength="5">
+                                <input type="text" class="form-control" name="class_id" value="{{ $students->class_id }}"
+                                    maxlength="5" readonly>
                             </div>
                             <div class="form-group">
                                 <label>Alamat</label>
-                                <textarea class="form-control" name="student-address">{{ $students->address }}</textarea>
+                                <textarea class="form-control" name="studentAddress">{{ $students->address }}</textarea>
                             </div>
                         </div>
                         <div class="col-md-12">

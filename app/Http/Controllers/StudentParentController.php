@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Student;
 use App\Models\StudentParent;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * Class ParentController
@@ -118,6 +119,33 @@ class StudentParentController extends Controller
 
     public function updateProfile(Request $request)
     {
-        return $request->all();
+        $parentId               = $request->parent_id;
+        $id                     = Auth::user()->id;
+        // Update field for Students
+        $nim                    = $request->nim;
+        $name                   = $request->name;
+        $studentAddress         = $request->studentAddress;
+        $class_id               = $request->class_id;
+        // Update field for Student Parents
+        $mobile                 = $request->mobile;
+        $occupation             = $request->occupation;
+        $address                = $request->address;
+
+
+        $students               = Student::where('parent_id',$parentId)->first();
+        $students->nim          = ($nim);
+        $students->class_id     = ($class_id);
+        $students->address      = ($studentAddress);
+        $students->name         = ($name);
+        $students->update();
+        
+        $parents                = StudentParent::where('user_id',$id)->first();
+        $parents->mobile        = ($mobile);
+        $parents->occupation    = ($occupation);
+        $parents->address       = ($address);
+        $parents->update();
+    
+        return redirect()->back()
+            ->with('success', 'Profil pengguna berhasil diperbarui');
     }
 }

@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.dashboard')
 
 @section('template_title')
     Loan
@@ -64,7 +64,8 @@
                                             <td>{{ $loan->attachment }}</td>
 
                                             <td>
-                                                <form action="{{ route('admin.loans.destroy', $loan->id) }}" method="POST">
+                                                <form action="{{ route('admin.loans.destroy', $loan->id) }}"
+                                                    method="POST">
                                                     <a class="btn btn-sm btn-primary "
                                                         href="{{ route('admin.loans.show', $loan->id) }}"><i
                                                             class="fa fa-fw fa-eye"></i> {{ __('Show') }}</a>
