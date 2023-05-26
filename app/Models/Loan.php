@@ -24,27 +24,37 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Loan extends Model
 {
-    
-    static $rules = [
-		'parent_id' => 'required',
-		'loan_date' => 'required',
-		'loan_purpose' => 'required',
-		'loan_amount' => 'required',
-		'long_installment' => 'required',
-		'installment_amount' => 'required',
-		'account_number' => 'required',
-		'attachment' => 'required',
-    ];
 
-    protected $perPage = 20;
+  static $rules = [
+    'parent_id' => 'required',
+    'loan_date' => 'required',
+    'loan_purpose' => 'required',
+    'loan_amount' => 'required',
+    'long_installment' => 'required',
+    'installment_amount' => 'required',
+    'account_number' => 'required',
+    'attachment_kk' => 'required',
+    'attachment_ktp_orang_tua' => 'required',
+    'attachment_ktp_mahasiswa' => 'required',
+  ];
 
-    /**
-     * Attributes that should be mass-assignable.
-     *
-     * @var array
-     */
-    protected $fillable = ['parent_id','loan_date','loan_purpose','loan_amount','long_installment','installment_amount','account_number','attachment'];
+  protected $perPage = 20;
 
-
-
+  /**
+   * Attributes that should be mass-assignable.
+   *
+   * @var array
+   */
+  protected $fillable = [
+    'parent_id',
+    'loan_date',
+    'loan_purpose',
+    'loan_amount',
+    'long_installment',
+    'installment_amount',
+    'account_number',
+    'attachment_kk',
+    'attachment_ktp_orang_tua',
+    'attachment_ktp_mahasiswa'
+  ];
 }

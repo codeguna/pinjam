@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ClassRoom;
 use App\Models\Loan;
+use App\Models\Student;
+use App\Models\StudentParent;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * Class LoanController
@@ -31,8 +35,10 @@ class LoanController extends Controller
      */
     public function create()
     {
-        $loan = new Loan();
-        return view('loan.create', compact('loan'));
+        $id             = Auth::user()->id;
+        $parents        = StudentParent::where('user_id', $id)->first();
+        $classRooms     = ClassRoom::pluck('id', 'name');
+        return view('loan.create', compact('parents', 'classRooms'));
     }
 
     /**

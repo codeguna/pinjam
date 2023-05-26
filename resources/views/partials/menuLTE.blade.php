@@ -34,7 +34,7 @@ with font-awesome or any other icon font library -->
                 request()->is('admin/loans')
                     ? 'active'
                     : '' }}">
-                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <i class="fa fa-archive nav-icon" aria-hidden="true"></i>
                 <p>
                     Data Master
                     <i class="right fas fa-angle-left"></i>

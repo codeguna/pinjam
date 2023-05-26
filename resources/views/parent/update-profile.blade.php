@@ -12,7 +12,6 @@
                     <div class="row">
                         @csrf
                         <input type="hidden" name="parent_id" value="{{ $students->id }}">
-
                         <div class="col-md-6">
                             <h5>Data Orang Tua</h5>
                             <div class="form-group">
@@ -50,8 +49,13 @@
                             </div>
                             <div class="form-group">
                                 <label>Kelas</label>
-                                <input type="text" class="form-control" name="class_id" value="{{ $students->class_id }}"
-                                    maxlength="5" readonly>
+                                <select class="form-control" name="class_id" required>
+                                    <option value="{{ $students->class_id }}" selected>{{ $students->classRoom->name }}
+                                    </option>
+                                    @foreach ($classRooms as $value => $key)
+                                        <option value="{{ $key }}">{{ $value }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                             <div class="form-group">
                                 <label>Alamat</label>

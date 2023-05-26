@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ClassRoom;
 use App\Models\Student;
 use App\Models\StudentParent;
 use Illuminate\Http\Request;
@@ -111,10 +112,11 @@ class StudentParentController extends Controller
 
     public function getProfile($id)
     {
-        $parents    = StudentParent::where('user_id', $id)->first();
-        $students    = Student::where('parent_id', $parents->id)->first();
+        $parents        = StudentParent::where('user_id', $id)->first();
+        $students       = Student::where('parent_id', $parents->id)->first();
+        $classRooms     = ClassRoom::pluck('id', 'name');
 
-        return view('parent.update-profile', compact('parents', 'students'));
+        return view('parent.update-profile', compact('parents', 'students', 'classRooms'));
     }
 
     public function updateProfile(Request $request)
@@ -132,19 +134,19 @@ class StudentParentController extends Controller
         $address                = $request->address;
 
 
-        $students               = Student::where('parent_id',$parentId)->first();
+        $students               = Student::find($parentId);
         $students->nim          = ($nim);
         $students->class_id     = ($class_id);
         $students->address      = ($studentAddress);
         $students->name         = ($name);
         $students->update();
-        
-        $parents                = StudentParent::where('user_id',$id)->first();
+
+        $parents                = StudentParent::where('user_id', $id)->first();
         $parents->mobile        = ($mobile);
         $parents->occupation    = ($occupation);
         $parents->address       = ($address);
         $parents->update();
-    
+
         return redirect()->back()
             ->with('success', 'Profil pengguna berhasil diperbarui');
     }

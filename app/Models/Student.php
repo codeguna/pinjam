@@ -52,4 +52,9 @@ class Student extends Model
   {
     return $this->belongsTo('App\Models\ClassRoom', 'class_id', 'id');
   }
+
+  public function studentParent()
+  {
+    return $this->belongsTo('App\Models\StudentParent', 'parent_id', 'id');
+  }
 }

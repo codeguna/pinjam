@@ -12,13 +12,14 @@
 
                 <div class="card card-primary card-outline">
                     <div class="card-header">
-                        <h5 class="m-0">Featured</h5>
+                        <h5 class="m-0">Pinjaman</h5>
                     </div>
                     <div class="card-body">
-                        <h6 class="card-title">Special title treatment</h6>
+                        <h6 class="card-title">Ajukan pinjaman sekarang!</h6>
 
-                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                        <p class="card-text">Bisa akses secara mudah melalui tombol dibawah ini.</p>
+                        <a href="{{ route('admin.loans.create') }}" class="btn btn-primary"><i
+                                class="fas fa-paper-plane"></i> Ajukan Pinjaman</a>
                     </div>
                 </div>
             </div>

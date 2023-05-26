@@ -1,7 +1,7 @@
 @extends('layouts.dashboard')
 
 @section('title')
-    {{ __('Create') }} Loan
+    Form Pinjaman
 @endsection
 
 @section('content')
