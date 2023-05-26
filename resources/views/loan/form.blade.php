@@ -10,35 +10,39 @@
                 </div>
                 <div class="form-group">
                     <label>Nomor Handphone</label>
-                    <input class="form-control" type="tel" name="mobile" maxlength="13"
-                        value="{{ $parents->mobile }}">
+                    <input class="form-control" type="tel" maxlength="13" value="{{ $parents->mobile }}" readonly>
                 </div>
                 <div class="form-group">
                     <label>Pekerjaan</label>
-                    <input type="text" class="form-control" name="occupation" value="{{ $parents->occupation }}">
+                    <input type="text" class="form-control" value="{{ $parents->occupation }}" readonly>
                 </div>
                 <div class="form-group">
                     <label>Alamat</label>
-                    <textarea class="form-control" name="address">{{ $parents->address }}</textarea>
+                    <textarea class="form-control" readonly>{{ $parents->address }}</textarea>
                 </div>
             </div>
             <div class="col-md-6">
                 <h5>Data Mahasiswa</h5>
                 <div class="form-group">
                     <label>Nama Mahasiswa</label>
-                    <input type="text" class="form-control" name="name" value="{{ $parents->name }}">
+                    <input type="text" class="form-control" value="{{ $parents->student->name }}" readonly>
                     <small id="helpId" class="form-text text-danger">*isikan dengan nama
                         sebenar-benarnya</small>
                 </div>
                 <div class="form-group">
                     <label>Nim Mahasiswa</label>
-                    <input type="text" class="form-control" name="nim" maxlength="10"
-                        value="{{ $parents->nim }}">
+                    <input type="text" class="form-control" maxlength="10" value="{{ $parents->student->nim }}"
+                        readonly>
                 </div>
                 <div class="form-group">
                     <label>Kelas</label>
-                    <select class="form-control" name="class_id" required>
-                        <option value="{{ $parents->class_id }}" selected>{{ $parents->student->class_id }}
+                    @php
+                        $className = App\Models\ClassRoom::select('name')
+                            ->where('id', $parents->student->class_id)
+                            ->first();
+                    @endphp
+                    <select class="form-control" readonly>
+                        <option value="{{ $parents->student->class_id }}" selected>{{ $className->name }}
                         </option>
                         @foreach ($classRooms as $value => $key)
                             <option value="{{ $key }}">{{ $value }}</option>
@@ -47,13 +51,20 @@
                 </div>
                 <div class="form-group">
                     <label>Alamat</label>
-                    <textarea class="form-control" name="studentAddress">{{ $parents->address }}</textarea>
+                    <textarea class="form-control" readonly>{{ $parents->student->address }}</textarea>
                 </div>
             </div>
         </div>
-
+        <hr>
     </div>
-    <div class="box-footer mt20">
-        <button type="submit" class="btn btn-primary">{{ __('Submit') }}</button>
-    </div>
+    <br>
+    @include('loan.additionalform')
+</div>
+<br>
+<hr>
+<div class="box-footer mt20">
+    <button type="submit" class="btn btn-primary">
+        <i class="fa fa-check-circle" aria-hidden="true"></i>
+        Submit
+    </button>
 </div>

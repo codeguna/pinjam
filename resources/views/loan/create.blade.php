@@ -13,7 +13,14 @@
 
                 <div class="card card-default">
                     <div class="card-header">
-                        <span class="card-title">{{ __('Create') }} Loan</span>
+                        <span class="card-title">Yang bertandatangan di bawah ini adalah orangtua mahasiswa POLMAN
+                            Bandung <br> <small>Untuk memperbarui data peminjaman, klik
+                                <a href="{{ route('admin.parent.get-profile', Auth::user()->id) }}">
+                                    <i class="fas fa-external-link-alt    "></i> disini
+                                </a>
+                            </small>
+                        </span>
+
                     </div>
                     <div class="card-body">
                         <form method="POST" action="{{ route('admin.loans.store') }}" role="form"
