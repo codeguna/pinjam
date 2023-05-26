@@ -20,7 +20,7 @@ class CreateLoanApprovalsTable extends Migration
             $table->integer('user_id')->unsigned();
             $table->string('name');
             $table->boolean('approved');
-            $table->int('level', 1);
+            $table->integer('level');
             $table->date('date_approved');
             $table->timestamps();
         });
