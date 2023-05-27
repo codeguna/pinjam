@@ -1,6 +1,7 @@
 <div class="box box-info padding-1">
     <div class="box-body">
         <div class="row">
+            <input type="hidden" name="parent_id" value="{{ $parents->id }}">
             <div class="col-md-6">
                 <h5>Data Orang Tua</h5>
                 <div class="form-group">

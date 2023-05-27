@@ -11,23 +11,30 @@
             <textarea class="form-control" name="loan_purpose" rows="3" required></textarea>
         </div>
     </div>
+    <div class="col-md-12">
+        <div class="form-group">
+            <label>Nominal Pinjaman</label>
+            <input type="number" min="0" class="form-control" name="installment_amount" required>
+        </div>
+    </div>
     <div class="col-md-6">
         <div class="form-group">
             <label>Lama Cicilan</label>
-            <input type="number" class="form-control" name="long_installment" placeholder="bulan" required>
+            <input type="number" class="form-control" name="long_installment" placeholder="bulan"
+                onchange="calculateLoanAmount()" required>
             <small class="form-text text-danger">*satuan Bulan</small>
         </div>
     </div>
     <div class="col-md-6">
         <div class="form-group">
             <label>Jumlah Cicilan</label>
-            <input type="number" class="form-control" name="long_amount" placeholder="rupiah" required>
+            <input type="number" class="form-control" name="loan_amount" placeholder="rupiah" readonly required>
             <small class="form-text text-danger">*satuan Rupiah</small>
         </div>
     </div>
     <div class="col-md-12">
         <div class="form-group">
-            <label></label>
+            <label>Nomor Rekening</label>
             <input type="number" min="0" maxlength="10" class="form-control" name="account_number" required>
             <small class="form-text text-info">*Bank BNI</small>
         </div>
@@ -70,3 +77,15 @@
         </div>
     </div>
 </div>
+@section('scripts')
+    <script>
+        function calculateLoanAmount() {
+            var installmentAmount = parseFloat(document.getElementsByName("installment_amount")[0].value);
+            var loanDuration = parseFloat(document.getElementsByName("long_installment")[0].value);
+            var loanAmountInput = document.getElementsByName("loan_amount")[0];
+
+            var loanAmount = installmentAmount / loanDuration;
+            loanAmountInput.value = loanAmount.toFixed(2);
+        }
+    </script>
+@endsection

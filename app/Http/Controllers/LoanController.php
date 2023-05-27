@@ -49,11 +49,48 @@ class LoanController extends Controller
      */
     public function store(Request $request)
     {
-        request()->validate(Loan::$rules);
 
-        $loan = Loan::create($request->all());
+        //request()->validate(Loan::$rules);
+        $parent_id                  = $request->parent_id;
+        $loan_date                  = $request->loan_date;
+        $loan_purpose               = $request->loan_purpose;
+        $loan_amount                = $request->loan_amount;
+        $long_installment           = $request->long_installment;
+        $installment_amount         = $request->installment_amount;
+        $account_number             = $request->account_number;
+        $attachment_kk              = $request->file('attachment_kk');
+        $attachment_ktp_orang_tua   = $request->file('attachment_ktp_orang_tua');
+        $attachment_ktp_mahasiswa   = $request->file('attachment_ktp_mahasiswa');
 
-        return redirect()->route('loans.index')
+        $file_kk            = time() . "_" . $attachment_kk->getClientOriginalName();
+        $file_ktp_ortu      = time() . "_" . $attachment_ktp_orang_tua->getClientOriginalName();
+        $file_ktp_mahasiswa  = time() . "_" . $attachment_ktp_mahasiswa->getClientOriginalName();
+
+        // isi dengan nama folder tempat kemana file diupload
+        $dir_file_kk        = 'data_kk';
+        $dir_ktp_ortu       = 'data_ktp_ortu';
+        $dir_ktp_mahasiswa  = 'data_ktp_mahasiswa';
+
+        $attachment_kk->move($dir_file_kk, $file_kk);
+        $attachment_ktp_orang_tua->move($dir_ktp_ortu, $file_ktp_ortu);
+        $attachment_ktp_mahasiswa->move($dir_ktp_mahasiswa, $file_ktp_mahasiswa);
+
+
+        $loan       = Loan::create([
+            'parent_id'                 => $parent_id,
+            'loan_date'                 => $loan_date,
+            'loan_purpose'              => $loan_purpose,
+            'loan_amount'               => $loan_amount,
+            'long_installment'          => $long_installment,
+            'installment_amount'        => $installment_amount,
+            'account_number'            => $account_number,
+            'attachment_kk'             => $attachment_kk,
+            'attachment_ktp_orang_tua'  => $attachment_ktp_orang_tua,
+            'attachment_ktp_mahasiswa'  => $attachment_ktp_mahasiswa,
+            'created_at'                => now()
+        ]);
+
+        return redirect()->route('admin.loans.index')
             ->with('success', 'Loan created successfully.');
     }
 

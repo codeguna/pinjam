@@ -26,16 +26,15 @@ class Loan extends Model
 {
 
   static $rules = [
-    'parent_id' => 'required',
     'loan_date' => 'required',
     'loan_purpose' => 'required',
     'loan_amount' => 'required',
     'long_installment' => 'required',
     'installment_amount' => 'required',
     'account_number' => 'required',
-    'attachment_kk' => 'required',
-    'attachment_ktp_orang_tua' => 'required',
-    'attachment_ktp_mahasiswa' => 'required',
+    'attachment_kk' => 'required|file|image|mimes:jpeg,png,jpg|max:2048',
+    'attachment_ktp_orang_tua' => 'required|file|image|mimes:jpeg,png,jpg|max:2048',
+    'attachment_ktp_mahasiswa' => 'required|file|image|mimes:jpeg,png,jpg|max:2048',
   ];
 
   protected $perPage = 20;

@@ -9,3 +9,6 @@ Homestead.json
 Homestead.yaml
 npm-debug.log
 .env
+/public/data_kk/*
+/public/data_ktp_mahasiswa/*
+/public/data_ktp_ortu/*

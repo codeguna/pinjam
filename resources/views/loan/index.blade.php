@@ -1,7 +1,7 @@
 @extends('layouts.dashboard')
 
-@section('template_title')
-    Loan
+@section('title')
+    Daftar Pinjaman
 @endsection
 
 @section('content')
@@ -13,7 +13,7 @@
                         <div style="display: flex; justify-content: space-between; align-items: center;">
 
                             <span id="card_title">
-                                {{ __('Loan') }}
+                                Pemohon Pinjaman
                             </span>
 
                             <div class="float-right">
