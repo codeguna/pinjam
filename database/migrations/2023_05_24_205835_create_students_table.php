@@ -19,6 +19,7 @@ class CreateStudentsTable extends Migration
             $table->integer('parent_id')->unsigned();
             $table->unique('parent_id');
             $table->foreign('parent_id')->references('id')->on('parents')->onDelete('cascade');
+            $table->string('name');
             $table->char('nim', 20);
             $table->integer('class_id')->unsigned();
             $table->string('address');
