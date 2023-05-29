@@ -1,7 +1,7 @@
 @extends('layouts.dashboard')
 
 @section('title')
-    Data Master - Class Room
+    Data Class Room
 @endsection
 
 @section('content')
@@ -36,9 +36,7 @@
                                 <thead class="thead">
                                     <tr>
                                         <th>No</th>
-                                        
-										<th>Name</th>
-
+                                        <th>Class Name</th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -46,14 +44,16 @@
                                     @foreach ($classRooms as $classRoom)
                                         <tr>
                                             <td>{{ ++$i }}</td>
-                                            
-											<td>{{ $classRoom->name }}</td>
+
+                                            <td>{{ $classRoom->name }}</td>
 
                                             <td>
-                                                <form action="{{ route('admin.class-rooms.destroy',$classRoom->id) }}" method="POST">                                                    
+                                                <form action="{{ route('admin.class-rooms.destroy', $classRoom->id) }}"
+                                                    method="POST">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-trash"></i></button>
+                                                    <button type="submit" class="btn btn-danger btn-sm"><i
+                                                            class="fa fa-fw fa-trash"></i></button>
                                                 </form>
                                             </td>
                                         </tr>

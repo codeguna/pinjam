@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ClassRoom;
 use App\Models\Student;
+use App\Models\StudentParent;
+use App\User;
 use Illuminate\Http\Request;
 
 /**
@@ -18,9 +21,11 @@ class StudentController extends Controller
      */
     public function index()
     {
-        $students = Student::paginate();
+        $students   = Student::paginate();
+        $parents      = StudentParent::doesntHave('student')->get();
+        $classRooms = ClassRoom::pluck('id','name');
 
-        return view('student.index', compact('students'))
+        return view('student.index', compact('students','parents','classRooms'))
             ->with('i', (request()->input('page', 1) - 1) * $students->perPage());
     }
 
@@ -73,8 +78,8 @@ class StudentController extends Controller
     public function edit($id)
     {
         $student = Student::find($id);
-
-        return view('student.edit', compact('student'));
+        $classRooms     = ClassRoom::pluck('id', 'name');
+        return view('student.edit', compact('student','classRooms'));
     }
 
     /**
