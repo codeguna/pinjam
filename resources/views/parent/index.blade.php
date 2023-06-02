@@ -1,7 +1,7 @@
 @extends('layouts.dashboard')
 
 @section('title')
-    Student Parents
+    Data Orang Tua dari Mahasiswa
 @endsection
 
 @section('content')
@@ -13,14 +13,14 @@
                         <div style="display: flex; justify-content: space-between; align-items: center;">
 
                             <span id="card_title">
-                                Student Parents Data
+                                Daftar Data Orang Tua
                             </span>
 
+                            @include('parent.modal')
                             <div class="float-right">
-                                <a href="{{ route('admin.parents.create') }}" class="btn btn-primary btn-sm float-right"
-                                    data-placement="left">
-                                    {{ __('Create New') }}
-                                </a>
+                                <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#parentModal">
+                                    <i class="fa fa-plus"></i>
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -36,7 +36,8 @@
                                 <thead class="thead">
                                     <tr>
                                         <th>No</th>
-                                        <th>Nama</th>
+                                        <th>Nama Orang Tua</th>
+                                        {{-- <th>Anak dari Mahasiswa</th> --}}
                                         <th>Mobile</th>
                                         <th>Occupation</th>
                                         <th>Address</th>
@@ -48,25 +49,16 @@
                                         <tr>
                                             <td>{{ ++$i }}</td>
 
-                                            <td>{{ $parent->user_id }}</td>
+                                            <td>{{ $parent->user->name }}</td>
+                                            {{-- <td>{{ $parent->student->name }}</td> --}}
                                             <td>{{ $parent->mobile }}</td>
                                             <td>{{ $parent->occupation }}</td>
                                             <td>{{ $parent->address }}</td>
 
                                             <td>
-                                                <form action="{{ route('admin.parents.destroy', $parent->id) }}"
-                                                    method="POST">
-                                                    <a class="btn btn-sm btn-primary "
-                                                        href="{{ route('admin.parents.show', $parent->id) }}"><i
-                                                            class="fa fa-fw fa-eye"></i> {{ __('Show') }}</a>
-                                                    <a class="btn btn-sm btn-success"
-                                                        href="{{ route('admin.parents.edit', $parent->id) }}"><i
-                                                            class="fa fa-fw fa-edit"></i> {{ __('Edit') }}</a>
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm"><i
-                                                            class="fa fa-fw fa-trash"></i> {{ __('Delete') }}</button>
-                                                </form>
+                                                <a class="btn btn-sm btn-success"
+                                                    href="{{ route('admin.parents.edit', $parent->id) }}"><i
+                                                        class="fa fa-fw fa-edit"></i></a>
                                             </td>
                                         </tr>
                                     @endforeach

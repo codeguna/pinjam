@@ -1,7 +1,7 @@
 @extends('layouts.dashboard')
 
-@section('template_title')
-    Student
+@section('title')
+    Data Mahasiswa dengan Orang Tua
 @endsection
 
 @section('content')
@@ -13,14 +13,13 @@
                         <div style="display: flex; justify-content: space-between; align-items: center;">
 
                             <span id="card_title">
-                                {{ __('Student') }}
+                                Daftar Mahasiswa dengan Orang Tua
                             </span>
-
+                            @include('student.modal')
                             <div class="float-right">
-                                <a href="{{ route('admin.students.create') }}" class="btn btn-primary btn-sm float-right"
-                                    data-placement="left">
-                                    {{ __('Create New') }}
-                                </a>
+                                <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#studentModal">
+                                    <i class="fa fa-plus"></i>
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -37,7 +36,8 @@
                                     <tr>
                                         <th>No</th>
 
-                                        <th>User Id</th>
+                                        <th>Nama Mahasiswa</th>
+                                        <th>Nama Orang Tua</th>
                                         <th>Nim</th>
                                         <th>Class Id</th>
                                         <th>Address</th>
@@ -47,27 +47,24 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($students as $student)
+                                        @php
+                                            $parentName = \App\User::select('name')
+                                                ->where('id', $student->studentParent->user_id)
+                                                ->first();
+                                        @endphp
                                         <tr>
                                             <td>{{ ++$i }}</td>
 
-                                            <td>{{ $student->user_id }}</td>
+                                            <td>{{ $student->name }}</td>
+                                            <td>{{ $parentName->name }}</td>
                                             <td>{{ $student->nim }}</td>
-                                            <td>{{ $student->class_id }}</td>
+                                            <td>{{ $student->classRoom->name }}</td>
                                             <td>{{ $student->address }}</td>
 
                                             <td>
-                                                <form action="{{ route('admin.students.destroy', $student->id) }}"
-                                                    method="POST">
-                                                    <a class="btn btn-sm btn-primary "
-                                                        href="{{ route('admin.students.show', $student->id) }}"><i
-                                                            class="fa fa-fw fa-eye"></i> {{ __('Show') }}</a>
-                                                    <a class="btn btn-sm btn-success"
-                                                        href="{{ route('admin.students.edit', $student->id) }}"><i
-                                                            class="fa fa-fw fa-edit"></i> {{ __('Edit') }}</a>
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm"><i
-                                                            class="fa fa-fw fa-trash"></i> {{ __('Delete') }}</button>
+                                                <a class="btn btn-sm btn-success"
+                                                    href="{{ route('admin.students.edit', $student->id) }}"><i
+                                                        class="fa fa-fw fa-edit"></i></a>
                                                 </form>
                                             </td>
                                         </tr>

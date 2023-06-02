@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\ClassRoom;
 use App\Models\Student;
 use App\Models\StudentParent;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -21,9 +22,10 @@ class StudentParentController extends Controller
      */
     public function index()
     {
-        $parents = StudentParent::paginate();
+        $parents  = StudentParent::paginate();
+        $users    = User::doesntHave('parent')->pluck('id','name');
 
-        return view('parent.index', compact('parents'))
+        return view('parent.index', compact('parents','users'))
             ->with('i', (request()->input('page', 1) - 1) * $parents->perPage());
     }
 
@@ -75,7 +77,7 @@ class StudentParentController extends Controller
      */
     public function edit($id)
     {
-        $parent = Parent::find($id);
+        $parent = StudentParent::find($id);
 
         return view('parent.edit', compact('parent'));
     }
@@ -87,7 +89,7 @@ class StudentParentController extends Controller
      * @param  Parent $parent
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Parent $parent)
+    public function update(Request $request, StudentParent $parent)
     {
         request()->validate(StudentParent::$rules);
 
@@ -104,7 +106,7 @@ class StudentParentController extends Controller
      */
     public function destroy($id)
     {
-        $parent = Parent::find($id)->delete();
+        $parent = StudentParent::find($id)->delete();
 
         return redirect()->route('admin.parents.index')
             ->with('success', 'Parent deleted successfully');

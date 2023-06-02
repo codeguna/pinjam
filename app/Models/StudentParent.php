@@ -23,7 +23,6 @@ class StudentParent extends Model
 {
 
   static $rules = [
-    'user_id' => 'required',
     'mobile' => 'required',
     'occupation' => 'required',
     'address' => 'required',

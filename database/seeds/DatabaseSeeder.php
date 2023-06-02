@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\ClassRoom;
+use Database\Seeders\ClassRoomSeeder;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -15,6 +15,6 @@ class DatabaseSeeder extends Seeder
         $this->call(PermissionSeed::class);
         $this->call(RoleSeed::class);
         $this->call(UserSeed::class);
-        $this->call(ClassRoom::class);
+        $this->call(ClassRoomSeeder::class);
     }
 }
