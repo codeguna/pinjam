@@ -17,11 +17,11 @@ class CreateLoanApprovalsTable extends Migration
             $table->increments('id');
             $table->integer('loan_id')->unsigned();
             $table->foreign('loan_id')->references('id')->on('loans')->onDelete('cascade');
-            $table->integer('user_id')->unsigned();
+            $table->integer('parent_id')->unsigned();
             $table->string('name');
             $table->boolean('approved');
             $table->integer('level');
-            $table->date('date_approved');
+            $table->date('date_approved')->nullable();
             $table->timestamps();
         });
     }

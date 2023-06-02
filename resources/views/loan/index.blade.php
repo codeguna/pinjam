@@ -31,22 +31,27 @@
                     @endif
 
                     <div class="card-body">
+                        <div class="w-100 p-1">
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" name="search" placeholder="Cari data pinjaman">
+                                <div class="input-group-append">
+                                    <button class="btn btn-info" type="submit">
+                                        <i class="fas fa-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                         <div class="table-responsive">
                             <table class="table table-striped table-hover">
                                 <thead class="thead">
                                     <tr>
                                         <th>No</th>
 
-                                        <th>Parent Id</th>
-                                        <th>Loan Date</th>
-                                        <th>Loan Purpose</th>
-                                        <th>Loan Amount</th>
-                                        <th>Long Installment</th>
-                                        <th>Installment Amount</th>
-                                        <th>Account Number</th>
-                                        <th>Attachment</th>
-
-                                        <th></th>
+                                        <th>Nama Peminjam</th>
+                                        <th>Tanggal Peminjaman</th>
+                                        <th>Jumlah Peminjaman</th>
+                                        <th>Persetujuan</th>
+                                        <th>Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -54,29 +59,89 @@
                                         <tr>
                                             <td>{{ ++$i }}</td>
 
-                                            <td>{{ $loan->parent_id }}</td>
-                                            <td>{{ $loan->loan_date }}</td>
-                                            <td>{{ $loan->loan_purpose }}</td>
-                                            <td>{{ $loan->loan_amount }}</td>
-                                            <td>{{ $loan->long_installment }}</td>
-                                            <td>{{ $loan->installment_amount }}</td>
-                                            <td>{{ $loan->account_number }}</td>
-                                            <td>{{ $loan->attachment }}</td>
-
                                             <td>
-                                                <form action="{{ route('admin.loans.destroy', $loan->id) }}"
+                                                <i class="fas fa-user-check"></i>
+                                                {{ $loan->studentParent->user->name }}
+                                            </td>
+                                            <td>
+                                                <i class="fas fa-calendar"></i>
+                                                {{ DateTime::createFromFormat('Y-m-d', $loan->loan_date)->format('d F Y') }}
+                                            </td>
+                                            <td>
+                                                <span class="badge bg-success">
+                                                    Rp. {{ number_format($loan->installment_amount) }}
+                                                </span>
+                                            </td>
+                                            <td>
+                                                @foreach ($loan->loanApproval as $approval)
+                                                    @if ($approval->approved == 0)
+                                                        <span class="badge bg-warning"
+                                                            title="Belum Disetujui {{ $approval->name }}">
+                                                            <i class="fas fa-times-circle"></i>
+                                                            {{ $approval->name }}
+                                                        </span>
+                                                    @else
+                                                        <span class="badge bg-success">
+                                                            <i class="fas fa-check-circle"></i>
+                                                            {{ $approval->name }}
+                                                        </span>
+                                                    @endif
+                                                @endforeach
+                                            </td>
+                                            <td>
+                                                <div class="btn-group mr-2" role="group" aria-label="First group">
+                                                    <a class="btn btn-sm btn-primary btn-sm"
+                                                        href="{{ route('admin.loans.show', $loan->id) }}"><i
+                                                            class="fa fa-fw fa-eye"></i></a>
+                                                    <a class="btn btn-sm btn-success btn-sm"
+                                                        href="{{ route('admin.loans.edit', $loan->id) }}"><i
+                                                            class="fa fa-fw fa-edit"></i></a>
+                                                    <form action="{{ route('admin.loans.destroy', $loan->id) }}"
+                                                        method="POST">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-danger btn-sm"><i
+                                                                class="fa fa-fw fa-trash"></i></button>
+                                                    </form>
+                                                </div>
+                                                {{-- <div class="btn-group" role="group">
+                                                    <button type="button" class="btn btn-primary btn-xs dropdown-toggle"
+                                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        <i class="fas fa-cog"></i> Aksi
+                                                    </button>
+                                                    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                                        <a class="dropdown-item"
+                                                            href="{{ route('admin.loans.show', $loan->id) }}">
+                                                            Lihat Detail
+                                                        </a>
+                                                        <a class="dropdown-item"
+                                                            href="{{ route('admin.loans.edit', $loan->id) }}">
+                                                            Edit Pinjaman
+                                                        </a>
+                                                        <form action="{{ route('admin.loans.destroy', $loan->id) }}"
+                                                            method="POST">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" class="dropdown-item">
+                                                                Batalkan Pinjaman
+                                                            </button>
+                                                        </form>
+                                                        <hr>
+                                                    </div>
+                                                </div> --}}
+                                                {{-- <form action="{{ route('admin.loans.destroy', $loan->id) }}"
                                                     method="POST">
                                                     <a class="btn btn-sm btn-primary "
                                                         href="{{ route('admin.loans.show', $loan->id) }}"><i
-                                                            class="fa fa-fw fa-eye"></i> {{ __('Show') }}</a>
+                                                            class="fa fa-fw fa-eye"></i></a>
                                                     <a class="btn btn-sm btn-success"
                                                         href="{{ route('admin.loans.edit', $loan->id) }}"><i
-                                                            class="fa fa-fw fa-edit"></i> {{ __('Edit') }}</a>
+                                                            class="fa fa-fw fa-edit"></i></a>
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-danger btn-sm"><i
-                                                            class="fa fa-fw fa-trash"></i> {{ __('Delete') }}</button>
-                                                </form>
+                                                            class="fa fa-fw fa-trash"></i></button>
+                                                </form> --}}
                                             </td>
                                         </tr>
                                     @endforeach

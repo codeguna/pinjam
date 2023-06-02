@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\ClassRoom;
 use App\Models\Loan;
+use App\Models\LoanApproval;
 use App\Models\Student;
 use App\Models\StudentParent;
 use Illuminate\Http\Request;
@@ -22,8 +23,7 @@ class LoanController extends Controller
      */
     public function index()
     {
-        $loans = Loan::paginate();
-
+        $loans = Loan::with('studentParent.user')->latest()->paginate();
         return view('loan.index', compact('loans'))
             ->with('i', (request()->input('page', 1) - 1) * $loans->perPage());
     }
@@ -76,7 +76,7 @@ class LoanController extends Controller
         $attachment_ktp_mahasiswa->move($dir_ktp_mahasiswa, $file_ktp_mahasiswa);
 
 
-        $loan       = Loan::create([
+        $loan                           = Loan::create([
             'parent_id'                 => $parent_id,
             'loan_date'                 => $loan_date,
             'loan_purpose'              => $loan_purpose,
@@ -84,11 +84,31 @@ class LoanController extends Controller
             'long_installment'          => $long_installment,
             'installment_amount'        => $installment_amount,
             'account_number'            => $account_number,
-            'attachment_kk'             => $attachment_kk,
-            'attachment_ktp_orang_tua'  => $attachment_ktp_orang_tua,
-            'attachment_ktp_mahasiswa'  => $attachment_ktp_mahasiswa,
+            'attachment_kk'             => $file_kk,
+            'attachment_ktp_orang_tua'  => $file_ktp_ortu,
+            'attachment_ktp_mahasiswa'  => $file_ktp_mahasiswa,
             'created_at'                => now()
         ]);
+
+        $data = array(
+            array(
+                'loan_id'       => $loan->id,
+                'parent_id'     => $loan->parent_id,
+                'name'          => 'Bendahara',
+                'approved'      => 0,
+                'level'         => 1,
+                'created_at'    => now()
+            ),
+            array(
+                'loan_id'       => $loan->id,
+                'parent_id'     => $loan->parent_id,
+                'name'          => 'Ketua',
+                'approved'      => 0,
+                'level'         => 2,
+                'created_at'    => now(),
+            )
+        );
+        LoanApproval::insert($data);
 
         return redirect()->route('admin.loans.index')
             ->with('success', 'Loan created successfully.');

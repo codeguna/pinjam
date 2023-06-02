@@ -56,4 +56,14 @@ class Loan extends Model
     'attachment_ktp_orang_tua',
     'attachment_ktp_mahasiswa'
   ];
+
+  public function loanApproval()
+  {
+    return $this->hasMany('App\Models\LoanApproval');
+  }
+
+  public function studentParent()
+  {
+    return $this->belongsTo('App\Models\StudentParent', 'parent_id', 'id');
+  }
 }
