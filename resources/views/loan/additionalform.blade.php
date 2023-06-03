@@ -80,8 +80,8 @@
 @section('scripts')
     <script>
         function calculateLoanAmount() {
-            var installmentAmount = parseFloat(document.getElementsByName("installment_amount")[0].value);
-            var loanDuration = parseFloat(document.getElementsByName("long_installment")[0].value);
+            var installmentAmount = document.getElementsByName("installment_amount")[0].value;
+            var loanDuration = document.getElementsByName("long_installment")[0].value;
             var loanAmountInput = document.getElementsByName("loan_amount")[0];
 
             var loanAmount = installmentAmount / loanDuration;
