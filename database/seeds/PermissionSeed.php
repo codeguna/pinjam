@@ -17,15 +17,29 @@ class PermissionSeed extends Seeder
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
         // Permissiion for Admin
         Permission::create([
-            'name'  =>  'users_manage',
             'name'  =>  'data_master_manage'
+        ]);
+        Permission::create([
+            'name'  =>  'users_manage'
         ]);
         //  Permission for Pinjaman
         Permission::create([
-            'name'  =>  'create_pinjaman',
-            'name'  =>  'approval_pinjaman_bendahara',
-            'name'  =>  'approval_pinjaman_ketua',
-            'name'  =>  'reject_pinjaman',
-            'name'  =>  'show_pinjaman']);
+            'name'  =>  'create_pinjaman'
+        ]);
+        Permission::create([
+            'name'  =>  'approval_pinjaman_bendahara'
+        ]);
+        Permission::create([
+            'name'  =>  'approval_pinjaman_ketua'
+        ]);
+        Permission::create([
+            'name'  =>  'reject_pinjaman_bendahara'
+        ]);
+        Permission::create([
+            'name'  =>  'reject_pinjaman_ketua'
+        ]);
+        Permission::create([
+            'name'  =>  'show_pinjaman'
+        ]);
     }
 }

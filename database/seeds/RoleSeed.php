@@ -21,10 +21,12 @@ class RoleSeed extends Seeder
 
         $role = Role::create(['name' => 'bendahara']);
         $role->givePermissionTo('approval_pinjaman_bendahara');
+        $role->givePermissionTo('reject_pinjaman_bendahara');
         $role->givePermissionTo('show_pinjaman');
 
         $role = Role::create(['name' => 'ketua']);
         $role->givePermissionTo('approval_pinjaman_ketua');
+        $role->givePermissionTo('reject_pinjaman_ketua');
         $role->givePermissionTo('show_pinjaman');
     }
 }
