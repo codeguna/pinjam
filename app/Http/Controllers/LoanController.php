@@ -9,6 +9,7 @@ use App\Models\Student;
 use App\Models\StudentParent;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 
 /**
  * Class LoanController
@@ -164,6 +165,18 @@ class LoanController extends Controller
      */
     public function destroy($id)
     {
+        $file_kk            = Loan::select('attachment_kk')->where('id', $id)->first();
+        $file_ktp_ortu      = Loan::select('attachment_ktp_orang_tua')->where('id', $id)->first();
+        $file_ktp_mahasiswa = Loan::select('attachment_ktp_mahasiswa')->where('id', $id)->first();
+      
+        $dir_kk             = public_path('data_kk/' . $file_kk->attachment_kk);
+        $dir_ktp_ortu       = public_path('data_ktp_ortu/' . $file_ktp_ortu->attachment_ktp_orang_tua);
+        $dir_ktp_mahasiswa  = public_path('data_ktp_mahasiswa/' . $file_ktp_mahasiswa->attachment_ktp_mahasiswa);
+      
+        $del_file_kk            = File::delete($dir_kk);
+        $del_file_ktp_ortu      = File::delete($dir_ktp_ortu);
+        $del_file_ktp_mahasiswa = File::delete($dir_ktp_mahasiswa);
+
         $loan = Loan::find($id)->delete();
 
         return redirect()->route('loans.index')
