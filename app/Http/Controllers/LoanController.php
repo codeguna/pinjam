@@ -31,12 +31,11 @@ class LoanController extends Controller
             $getId          = Auth::user()->id;
             $getParentId     = StudentParent::where('user_id', $getId)->first();
 
-            $loans = Loan::where('parent_id', $getParentId)->get();
+            $loans = Loan::where('parent_id', $getParentId->id)->latest()->get();
         } else {
-            $loans = Loan::latest();
+            $loans = Loan::latest()->get();
         }
 
-        return $loans;
         return view('loan.index', compact('loans'))
             ->with('i');
     }

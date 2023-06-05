@@ -108,8 +108,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             alt="User Image">
                     </div>
                     <div class="info">
-                        <a href="#" class="d-block">{{ Auth::User()->name }} <br>
-                            <small>{{ Auth::user()->getRoleNames()->first() }}</small>
+                        <a href="#" class="d-block">{{ Auth::User()->name }} <small>🟢</small><br>
+                            <small><i class="fas fa-user-circle"></i>
+                                {{ Auth::user()->getRoleNames()->first() }}</small>
                         </a>
                     </div>
                 </div>

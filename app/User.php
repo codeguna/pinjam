@@ -6,6 +6,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
 use Hash;
+use Spatie\Permission\Models\Role;
 
 /**
  * Class User
@@ -40,7 +41,8 @@ class User extends Authenticatable
         return $this->belongsToMany(Role::class, 'role_user');
     }
 
-    public function parent(){
+    public function parent()
+    {
         return $this->hasOne('App\Models\StudentParent');
     }
 }

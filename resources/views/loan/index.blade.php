@@ -77,16 +77,23 @@
                                                     <a class="btn btn-sm btn-primary btn-sm"
                                                         href="{{ route('admin.loans.show', $loan->id) }}"><i
                                                             class="fa fa-fw fa-eye"></i></a>
-                                                    <a class="btn btn-sm btn-success btn-sm"
-                                                        href="{{ route('admin.loans.edit', $loan->id) }}"><i
-                                                            class="fa fa-fw fa-edit"></i></a>
-                                                    <form action="{{ route('admin.loans.destroy', $loan->id) }}"
-                                                        method="POST">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit" class="btn btn-danger btn-sm"><i
-                                                                class="fa fa-fw fa-trash"></i></button>
-                                                    </form>
+                                                    @can('edit_pinjaman')
+                                                        <a class="btn btn-sm btn-success btn-sm"
+                                                            href="{{ route('admin.loans.edit', $loan->id) }}"><i
+                                                                class="fa fa-fw fa-edit"></i></a>
+                                                    @endcan
+
+
+                                                    @can('delete_pinjaman')
+                                                        <form action="{{ route('admin.loans.destroy', $loan->id) }}"
+                                                            method="POST">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" class="btn btn-danger btn-sm"><i
+                                                                    class="fa fa-fw fa-trash"></i></button>
+                                                        </form>
+                                                    @endcan
+
                                                 </div>
                                             </td>
                                         </tr>

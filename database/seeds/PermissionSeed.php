@@ -27,6 +27,12 @@ class PermissionSeed extends Seeder
             'name'  =>  'create_pinjaman'
         ]);
         Permission::create([
+            'name'  =>  'delete_pinjaman'
+        ]);
+        Permission::create([
+            'name'  =>  'edit_pinjaman'
+        ]);
+        Permission::create([
             'name'  =>  'approval_pinjaman_bendahara'
         ]);
         Permission::create([
