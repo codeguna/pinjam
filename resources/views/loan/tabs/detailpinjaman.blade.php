@@ -66,7 +66,7 @@
                 <div class="info-box">
                     <span class="info-box-icon bg-success"><i class="fas fa-id-card"></i></span>
                     <div class="info-box-content">
-                        <span class="info-box-text">Kartu Keluarga</span>
+                        <span class="info-box-text">KTP Mahasiswa</span>
                         <span class="info-box-number">
                             <a href="{{ url('/data_ktp_mahasiswa/' . $loan->attachment_ktp_mahasiswa) }}"
                                 target="_blank">

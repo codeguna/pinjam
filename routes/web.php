@@ -25,6 +25,9 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
     // End of Route Class
     // Route of Loans
     Route::resource('loans', 'LoanController');
+    Route::post('/loans/approve/{loan}', 'LoanController@approve')->name('loans.approve');
+    Route::post('/loans/reject/{loan}', 'LoanController@reject')->name('loans.reject');
+    Route::get('/loan/search', 'LoanController@search')->name('loans.search');
     // End of Route Loans
     // Route of Parents
     Route::resource('parents', 'StudentParentController');

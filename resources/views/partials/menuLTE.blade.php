@@ -12,15 +12,41 @@ with font-awesome or any other icon font library -->
                 </p>
             </a>
         </li>
+        <li class="nav-item">
+            <a href="{{ route('admin.loans.index') }}"
+                class="nav-link {{ request()->is('admin/loans') || request()->is('admin/loans/*') ? 'active' : '' }}">
+                <i class="fas fa-hand-holding-usd nav-icon"></i>
+                <p>
+                    Pinjaman Saya
+                </p>
+            </a>
+        </li>
+        <li class="nav-item {{ request()->is('admin/loans/*') || request()->is('admin/loans') ? 'menu-open' : '' }}">
+            <a href="#"
+                class="nav-link {{ request()->is('admin/loans/*') || request()->is('admin/loans') ? 'active' : '' }}">
+                <i class="fas fa-money-bill nav-icon"></i>
+                <p>
+                    Data Peminjaman
+                    <i class="right fas fa-angle-left"></i>
+                </p>
+            </a>
+            <ul class="nav nav-treeview">
+                <li class="nav-item">
+                    <a href="{{ route('admin.loans.index') }}"
+                        class="nav-link {{ request()->is('admin/loans') || request()->is('admin/loans/*') ? 'active' : '' }}">
+                        <i class="fas fa-door-open nav-icon"></i>
+                        <p>Pinjaman Masuk</p>
+                    </a>
+                </li>
+            </ul>
+        </li>
         <li
             class="nav-item {{ request()->is('admin/class-rooms') ||
             request()->is('admin/class-rooms/*') ||
             request()->is('admin/students/*') ||
             request()->is('admin/students') ||
             request()->is('admin/parents/*') ||
-            request()->is('admin/parents') ||
-            request()->is('admin/loans/*') ||
-            request()->is('admin/loans')
+            request()->is('admin/parents')
                 ? 'menu-open'
                 : '' }}">
             <a href="#"
@@ -29,9 +55,7 @@ with font-awesome or any other icon font library -->
                 request()->is('admin/students/*') ||
                 request()->is('admin/students') ||
                 request()->is('admin/parents/*') ||
-                request()->is('admin/parents') ||
-                request()->is('admin/loans/*') ||
-                request()->is('admin/loans')
+                request()->is('admin/parents')
                     ? 'active'
                     : '' }}">
                 <i class="fa fa-archive nav-icon" aria-hidden="true"></i>

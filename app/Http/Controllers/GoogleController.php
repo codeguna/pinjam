@@ -52,6 +52,9 @@ class GoogleController extends Controller
                 Auth::login($newUser);
                 $getId = Auth::User()->id;
 
+                $newUser->assignRole('orang_tua');
+                $newUser->givePermissionTo('create_pinjaman');
+
                 $parents            = StudentParent::create([
                     'user_id'       => $getId,
                     'mobile'        => '000000000',

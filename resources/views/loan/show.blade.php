@@ -22,11 +22,64 @@
                                     Aksi
                                 </button>
                                 <div class="dropdown-menu">
-                                    <button class="dropdown-item" type="button">Setujui Pinjaman (Bendahara)</button>
-                                    <button class="dropdown-item" type="button">Setujui Pinjaman (Ketua)</button>
+                                    @can('approval_pinjaman_bendahara')
+                                        <form action="{{ route('admin.loans.approve', $loan->id) }}" method="POST">
+                                            @csrf
+                                            <input type="hidden" name="level" value="1">
+                                            <input type="hidden" name="approved" value="1">
+                                            @if ($ketuaApproved->approved == 1)
+                                                <button class="dropdown-item" type="submit" disabled>Setujui Pinjaman
+                                                    (Bendahara)</button>
+                                            @else
+                                                <button class="dropdown-item" type="submit">Setujui Pinjaman
+                                                    (Bendahara)</button>
+                                            @endif
+                                        </form>
+                                    @endcan
+                                    @can('approval_pinjaman_ketua')
+                                        <form action="{{ route('admin.loans.approve', $loan->id) }}" method="POST">
+                                            @csrf
+                                            <input type="hidden" name="level" value="2">
+                                            <input type="hidden" name="approved" value="1">
+                                            @if ($bendaharaApproved->approved == 1)
+                                                <button class="dropdown-item" type="submit">Setujui Pinjaman (Ketua)</button>
+                                            @else
+                                                <button class="dropdown-item" type="submit" disabled>Setujui Pinjaman
+                                                    (Ketua)</button>
+                                            @endif
+                                        </form>
+                                    @endcan
+
                                     <hr>
-                                    <button class="dropdown-item" type="button">Tolak Pinjaman (Bendahara)</button>
-                                    <button class="dropdown-item" type="button">Tolak Pinjaman (Ketua)</button>
+                                    @can('reject_pinjaman_bendahara')
+                                        <form action="{{ route('admin.loans.reject', $loan->id) }}" method="POST">
+                                            @csrf
+                                            <input type="hidden" name="level" value="1">
+                                            <input type="hidden" name="approved" value="0">
+                                            @if ($ketuaApproved->approved == 1)
+                                                <button class="dropdown-item" type="submit" disabled>Tolak Pinjaman
+                                                    (Bendahara)</button>
+                                            @else
+                                                <button class="dropdown-item" type="submit">Tolak Pinjaman (Bendahara)</button>
+                                            @endif
+
+                                        </form>
+                                    @endcan
+                                    @can('reject_pinjaman_ketua')
+                                        <form action="{{ route('admin.loans.reject', $loan->id) }}" method="POST">
+                                            @csrf
+                                            <input type="hidden" name="level" value="2">
+                                            <input type="hidden" name="approved" value="0">
+
+                                            @if ($bendaharaApproved->approved == 1)
+                                                <button class="dropdown-item" type="submit">Tolak Pinjaman (Ketua)</button>
+                                            @else
+                                                <button class="dropdown-item" type="submit" disabled>Tolak Pinjaman
+                                                    (Ketua)</button>
+                                            @endif
+
+                                        </form>
+                                    @endcan
                                 </div>
                             </div>
                         </div>
@@ -64,6 +117,23 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div class="card-footer">
+                        <h4>Status Persetujuan:
+                            @foreach ($loan->loanApproval as $approval)
+                                @if ($approval->approved == 0)
+                                    <span class="badge bg-warning" title="Belum Disetujui {{ $approval->name }}">
+                                        <i class="fas fa-times-circle"></i>
+                                        {{ $approval->name }}
+                                    </span>
+                                @else
+                                    <span class="badge bg-success">
+                                        <i class="fas fa-check-circle"></i>
+                                        {{ $approval->name }}
+                                    </span>
+                                @endif
+                            @endforeach
+                        </h4>
                     </div>
                 </div>
             </div>

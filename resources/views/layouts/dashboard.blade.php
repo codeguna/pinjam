@@ -108,7 +108,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             alt="User Image">
                     </div>
                     <div class="info">
-                        <a href="#" class="d-block">{{ Auth::User()->name }}</a>
+                        <a href="#" class="d-block">{{ Auth::User()->name }} <br>
+                            <small>{{ Auth::user()->getRoleNames()->first() }}</small>
+                        </a>
                     </div>
                 </div>
 

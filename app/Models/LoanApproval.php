@@ -49,4 +49,9 @@ class LoanApproval extends Model
   {
     return $this->belongsTo('App\Models\Loan', 'id', 'loan_id');
   }
+
+  public function studentParent()
+  {
+    return $this->belongsToMany('App\Models\Studentparent', 'id', 'parent_id');
+  }
 }

@@ -7,9 +7,11 @@ use App\Models\Loan;
 use App\Models\LoanApproval;
 use App\Models\Student;
 use App\Models\StudentParent;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Gate;
 
 /**
  * Class LoanController
@@ -24,9 +26,19 @@ class LoanController extends Controller
      */
     public function index()
     {
-        $loans = Loan::with('studentParent.user')->latest()->paginate();
+
+        if (Auth::user()->hasRole('orang_tua')) {
+            $getId          = Auth::user()->id;
+            $getParentId     = StudentParent::where('user_id', $getId)->first();
+
+            $loans = Loan::where('parent_id', $getParentId)->get();
+        } else {
+            $loans = Loan::latest();
+        }
+
+        return $loans;
         return view('loan.index', compact('loans'))
-            ->with('i', (request()->input('page', 1) - 1) * $loans->perPage());
+            ->with('i');
     }
 
     /**
@@ -123,9 +135,13 @@ class LoanController extends Controller
      */
     public function show($id)
     {
-        $loan = Loan::find($id);
+        $loan               = Loan::find($id);
+        $levelBendahara     = 1;
+        $levelKetua         = 2;
+        $bendaharaApproved  = LoanApproval::select('approved')->where('loan_id', $id)->where('level', $levelBendahara)->first();
+        $ketuaApproved      = LoanApproval::select('approved')->where('loan_id', $id)->where('level', $levelKetua)->first();
 
-        return view('loan.show', compact('loan'));
+        return view('loan.show', compact('loan', 'bendaharaApproved', 'ketuaApproved'));
     }
 
     /**
@@ -168,11 +184,11 @@ class LoanController extends Controller
         $file_kk            = Loan::select('attachment_kk')->where('id', $id)->first();
         $file_ktp_ortu      = Loan::select('attachment_ktp_orang_tua')->where('id', $id)->first();
         $file_ktp_mahasiswa = Loan::select('attachment_ktp_mahasiswa')->where('id', $id)->first();
-      
+
         $dir_kk             = public_path('data_kk/' . $file_kk->attachment_kk);
         $dir_ktp_ortu       = public_path('data_ktp_ortu/' . $file_ktp_ortu->attachment_ktp_orang_tua);
         $dir_ktp_mahasiswa  = public_path('data_ktp_mahasiswa/' . $file_ktp_mahasiswa->attachment_ktp_mahasiswa);
-      
+
         $del_file_kk            = File::delete($dir_kk);
         $del_file_ktp_ortu      = File::delete($dir_ktp_ortu);
         $del_file_ktp_mahasiswa = File::delete($dir_ktp_mahasiswa);
@@ -181,5 +197,49 @@ class LoanController extends Controller
 
         return redirect()->route('loans.index')
             ->with('success', 'Loan deleted successfully');
+    }
+
+    public function approve(Request $request, $id)
+    {
+        $approved       = $request->approved;
+        $level          = $request->level;
+        $date_approved  = now();
+        $loan_id        = $id;
+
+        $loanApproval                   = LoanApproval::where('loan_id', $loan_id)->where('level', $level)->first();
+
+        $loanApproval->approved         = $approved;
+        $loanApproval->date_approved    = $date_approved;
+        $loanApproval->updated_at       = now();
+        $loanApproval->update();
+
+        return redirect()->route('admin.loans.index')
+            ->with('success', 'Berhasil menyetujui pinjaman');
+    }
+    public function reject(Request $request, $id)
+    {
+        $approved       = $request->approved;
+        $level          = $request->level;
+        $date_approved  = now();
+        $loan_id        = $id;
+
+        $loanApproval                   = LoanApproval::where('loan_id', $loan_id)->where('level', $level)->first();
+
+        $loanApproval->approved         = $approved;
+        $loanApproval->date_approved    = $date_approved;
+        $loanApproval->updated_at       = now();
+        $loanApproval->update();
+
+        return redirect()->route('admin.loans.index')
+            ->with('success', 'Berhasil menyetujui pinjaman');
+    }
+
+    public function search(Request $request)
+    {
+        $search     = $request->search;
+
+        $user       = User::select('id')->where('name', 'like', "%{$search}%")->first();
+
+        return $user;
     }
 }
