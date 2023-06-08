@@ -165,11 +165,11 @@ class LoanController extends Controller
      */
     public function update(Request $request, Loan $loan)
     {
-        request()->validate(Loan::$rules);
+        //request()->validate(Loan::$rules);
 
         $loan->update($request->all());
 
-        return redirect()->route('loans.index')
+        return redirect()->route('admin.loans.index')
             ->with('success', 'Loan updated successfully');
     }
 

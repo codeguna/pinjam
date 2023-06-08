@@ -24,6 +24,7 @@ class RoleSeed extends Seeder
         $role->givePermissionTo('approval_pinjaman_bendahara');
         $role->givePermissionTo('reject_pinjaman_bendahara');
         $role->givePermissionTo('show_pinjaman');
+        $role->givePermissionTo('edit_pinjaman');
 
         $role = Role::create(['name' => 'ketua']);
         $role->givePermissionTo('approval_pinjaman_ketua');

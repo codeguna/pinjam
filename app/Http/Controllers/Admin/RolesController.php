@@ -19,7 +19,7 @@ class RolesController extends Controller
      */
     public function index()
     {
-        if (! Gate::allows('users_manage')) {
+        if (!Gate::allows('users_manage')) {
             return abort(401);
         }
 
@@ -35,7 +35,7 @@ class RolesController extends Controller
      */
     public function create()
     {
-        if (! Gate::allows('users_manage')) {
+        if (!Gate::allows('users_manage')) {
             return abort(401);
         }
         $permissions = Permission::get()->pluck('name', 'name');
@@ -51,7 +51,7 @@ class RolesController extends Controller
      */
     public function store(StoreRolesRequest $request)
     {
-        if (! Gate::allows('users_manage')) {
+        if (!Gate::allows('users_manage')) {
             return abort(401);
         }
         $role = Role::create($request->except('permission'));
@@ -70,7 +70,7 @@ class RolesController extends Controller
      */
     public function edit(Role $role)
     {
-        if (! Gate::allows('users_manage')) {
+        if (!Gate::allows('users_manage')) {
             return abort(401);
         }
         $permissions = Permission::get()->pluck('name', 'name');
@@ -87,7 +87,7 @@ class RolesController extends Controller
      */
     public function update(UpdateRolesRequest $request, Role $role)
     {
-        if (! Gate::allows('users_manage')) {
+        if (!Gate::allows('users_manage')) {
             return abort(401);
         }
 
@@ -100,7 +100,7 @@ class RolesController extends Controller
 
     public function show(Role $role)
     {
-        if (! Gate::allows('users_manage')) {
+        if (!Gate::allows('users_manage')) {
             return abort(401);
         }
 
@@ -118,7 +118,7 @@ class RolesController extends Controller
      */
     public function destroy(Role $role)
     {
-        if (! Gate::allows('users_manage')) {
+        if (!Gate::allows('users_manage')) {
             return abort(401);
         }
 
@@ -138,5 +138,4 @@ class RolesController extends Controller
 
         return response()->noContent();
     }
-
 }
