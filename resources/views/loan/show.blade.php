@@ -103,6 +103,11 @@
                                                 class="fas fa-money-check"></i> Detail
                                             Pinjaman</a>
                                     </li>
+                                    <li class="nav-item" role="presentation">
+                                        <a class="nav-link" id="ex1-tab-3" data-toggle="tab" href="#ex1-tabs-3"
+                                            role="tab" aria-controls="ex1-tabs-3" aria-selected="true"><i
+                                                class="fas fa-history"></i> History Pembayaran</a>
+                                    </li>
                                 </ul>
                                 <!-- Tabs navs -->
                                 {{-- Tabs Content --}}
@@ -111,7 +116,8 @@
                                         aria-labelledby="ex1-tab-1">
                                         @include('loan.tabs.datapeminjam')
                                     </div>
-                                    <div class="tab-pane fade" id="ex1-tabs-2" role="tabpanel" aria-labelledby="ex1-tab-2">
+                                    <div class="tab-pane fade" id="ex1-tabs-2" role="tabpanel"
+                                        aria-labelledby="ex1-tab-2">
                                         @include('loan.tabs.detailpinjaman')
                                     </div>
                                 </div>
