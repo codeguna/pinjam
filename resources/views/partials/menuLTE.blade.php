@@ -14,8 +14,17 @@ with font-awesome or any other icon font library -->
         </li>
         @can('create_pinjaman')
             <li class="nav-item">
+                <a href="{{ route('admin.loans.create') }}"
+                    class="nav-link {{ request()->is('admin/loans/create') || request()->is('admin/loans/create/*') ? 'active' : '' }}">
+                    <i class="fas fa-paper-plane nav-icon"></i>
+                    <p>
+                        Ajukan Pinjaman
+                    </p>
+                </a>
+            </li>
+            <li class="nav-item">
                 <a href="{{ route('admin.loans.index') }}"
-                    class="nav-link {{ request()->is('admin/loans') || request()->is('admin/loans/*') ? 'active' : '' }}">
+                    class="nav-link {{ request()->is('admin/loans') ? 'active' : '' }}">
                     <i class="fas fa-hand-holding-usd nav-icon"></i>
                     <p>
                         Pinjaman Saya

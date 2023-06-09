@@ -66,4 +66,9 @@ class Loan extends Model
   {
     return $this->belongsTo('App\Models\StudentParent', 'parent_id', 'id');
   }
+
+  public function installmentPayment()
+  {
+    return $this->hasMany('App\Models\InstallmentPayment');
+  }
 }

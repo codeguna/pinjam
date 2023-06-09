@@ -34,6 +34,7 @@
                                         <th>Nama Peminjam</th>
                                         <th>Tanggal Peminjaman</th>
                                         <th>Jumlah Peminjaman</th>
+                                        <th>Status Pembayaran</th>
                                         <th>Persetujuan</th>
                                         <th>Aksi</th>
                                     </tr>
@@ -55,6 +56,15 @@
                                                 <span class="badge bg-success">
                                                     Rp. {{ number_format($loan->installment_amount) }}
                                                 </span>
+                                            </td>
+                                            <td>
+                                                @php
+                                                    $jumlahCicilan = $loan->installmentPayment->count();
+                                                    $jumlahLunas = $loan->installmentPayment->where('isPay', 1)->count();
+                                                    $persentase = ($jumlahLunas / $jumlahCicilan) * 100;
+                                                @endphp
+                                                <i class="fas fa-check"></i> {{ number_format($persentase, 2, ',', '.') }}%
+                                                Pembayaran Lunas
                                             </td>
                                             <td>
                                                 @foreach ($loan->loanApproval as $approval)

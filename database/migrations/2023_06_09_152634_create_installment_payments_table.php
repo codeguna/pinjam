@@ -17,10 +17,11 @@ class CreateInstallmentPaymentsTable extends Migration
             $table->increments('id');
             $table->integer('loan_id')->unsigned();
             $table->foreign('loan_id')->references('id')->on('loans')->onDelete('cascade');
-            $table->integer('user_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->integer('parent_id')->unsigned();
+            $table->foreign('parent_id')->references('id')->on('parents')->onDelete('cascade');
             $table->char('installment', 2);
-            $table->date('payment_date');
+            $table->boolean('isPay');
+            $table->date('payment_date')->nullable();
             $table->timestamps();
         });
     }

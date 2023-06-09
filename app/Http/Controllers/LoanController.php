@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\ClassRoom;
+use App\Models\InstallmentPayment;
 use App\Models\Loan;
 use App\Models\LoanApproval;
 use App\Models\Student;
@@ -35,6 +36,12 @@ class LoanController extends Controller
         } else {
             $loans = Loan::latest()->get();
         }
+
+        $loans->each(function ($loan) {
+            if ($loan->isPay == 1) {
+                $loan->percentage = $loan->installmentPayment;
+            }
+        });
 
         return view('loan.index', compact('loans'))
             ->with('i');
@@ -121,6 +128,20 @@ class LoanController extends Controller
             )
         );
         LoanApproval::insert($data);
+        
+$dataPembayaran = array();
+
+for ($i = 1; $i <= $long_installment; $i++) {
+    $dataPembayaran[] = array(
+        'loan_id' => $loan->id,
+        'parent_id' => $loan->parent_id,
+        'installment' => $i,
+        'isPay' => 0,
+        'created_at' => now()
+    );
+}
+
+InstallmentPayment::insert($dataPembayaran);
 
         return redirect()->route('admin.loans.index')
             ->with('success', 'Loan created successfully.');

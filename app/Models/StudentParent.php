@@ -49,4 +49,8 @@ class StudentParent extends Model
   {
     return $this->hasOne('App\Models\Student', 'parent_id', 'id');
   }
+  public function installmentPayment()
+  {
+    return $this->hasMany('App\Models\InstallmentPayment', 'loan_id', 'id');
+  }
 }

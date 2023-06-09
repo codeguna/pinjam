@@ -70,14 +70,16 @@
                         </div>
                         <!-- /.col -->
                         <div class="col-4">
-                            <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+                            <button type="submit" class="btn btn-primary btn-block">
+                                <i class="fas fa-sign-in-alt"></i> Sign In
+                            </button>
                         </div>
                         <!-- /.col -->
                     </div>
                 </form>
 
                 <div class="social-auth-links text-center mb-3">
-                    <p>- OR -</p>
+                    <p>- Untuk pengguna Orang Tua, masuk dengan akun Google -</p>
                     <a href="{{ url('auth/google') }}" class="btn btn-block btn-primary">
                         <i class="fab fa-google mr-2"></i> Sign in using Google
                     </a>

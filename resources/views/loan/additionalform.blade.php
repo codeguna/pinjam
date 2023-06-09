@@ -14,7 +14,8 @@
     <div class="col-md-12">
         <div class="form-group">
             <label>Nominal Pinjaman</label>
-            <input type="number" min="0" class="form-control" name="installment_amount" required>
+            <input type="number" min="0" class="form-control" name="installment_amount"
+                onchange="calculateLoanAmount()" required>
         </div>
     </div>
     <div class="col-md-6">
@@ -66,15 +67,14 @@
                 Bilamana sampai kelulusan anak saya masih ada tunggakan yang belum diselesaikan, maka ijazah
                 anak saya akan ditahan dan dititipkan di <strong>IOM POLMAN</strong>, hingga pinjaman tsb
                 dilunasi.
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input type="checkbox" class="form-check-input" name="agreement" value="1" required>
+                        Saya Menyetujuinya
+                    </label>
+                </div>
             </small>
-
         </p>
-        <div class="form-check">
-            <label class="form-check-label">
-                <input type="checkbox" class="form-check-input" name="agreement" value="1" required>
-                Saya Menyetujuinya
-            </label>
-        </div>
     </div>
 </div>
 @section('scripts')
