@@ -40,47 +40,117 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </ul>
 
             <!-- Right navbar links -->
+
             <ul class="navbar-nav ml-auto">
-                <!-- Navbar Search -->
-                <li class="nav-item">
-                    <a class="nav-link" data-widget="navbar-search" href="#" role="button">
-                        <i class="fas fa-search"></i>
-                    </a>
-                    <div class="navbar-search-block">
-                        <form class="form-inline">
-                            <div class="input-group input-group-sm">
-                                <input class="form-control form-control-navbar" type="search" placeholder="Search"
-                                    aria-label="Search">
-                                <div class="input-group-append">
-                                    <button class="btn btn-navbar" type="submit">
-                                        <i class="fas fa-search"></i>
-                                    </button>
-                                    <button class="btn btn-navbar" type="button" data-widget="navbar-search">
-                                        <i class="fas fa-times"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </li>
-                <!-- Notifications Dropdown Menu -->
-                <li class="nav-item dropdown">
-                    <a class="nav-link" data-toggle="dropdown" href="#">
-                        <i class="fa fa-user-circle" aria-hidden="true"></i>
-                    </a>
+                @can('approval_pinjaman_bendahara')
+                    <!-- Navbar Search -->
                     @php
-                        $getId = Auth::user()->id;
+                        $notificationBendahara = App\Models\Loan::whereHas('loanApproval', function ($query) {
+                            $query->where('approved', 0)->where('level', 1);
+                        })
+                            ->latest()
+                            ->paginate(3);
+                        
+                        $loanCount = App\Models\Loan::whereHas('loanApproval', function ($query) {
+                            $query->where('approved', 0)->where('level', 1);
+                        })->count();
                     @endphp
-                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                        <span class="dropdown-header">User Profile</span>
-                        <div class="dropdown-divider"></div>
-                        <a href="{{ route('admin.parent.get-profile', $getId) }}" class="dropdown-item">
-                            <i class="fas fa-pencil-alt"></i> Update Profile
+                    <li class="nav-item dropdown">
+                        <a class="nav-link" data-toggle="dropdown" href="#">
+                            <i class="fas fa-bell"></i>
+                            <span class="badge badge-danger navbar-badge">{{ $loanCount }}</span>
                         </a>
 
-                        <div class="dropdown-divider"></div>
-                    </div>
-                </li>
+                        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                            <span class="dropdown-header">Notifications</span>
+                            <div class="dropdown-divider"></div>
+                            @forelse ($notificationBendahara as $notifBendahara)
+                                <a href="{{ route('admin.loans.show', $notifBendahara->id) }}" class="dropdown-item">
+                                    Pengajuan Baru - <i class="fas fa-clock"></i>
+                                    {{ $notifBendahara->created_at->diffForHumans() }}
+                                    <br>
+                                    <small>
+                                        <i class="fas fa-user"></i> {{ $notifBendahara->studentParent->user->name }}
+                                    </small>
+                                </a>
+                            @empty
+                                <p class="dropdown-item">
+                                    Belum ada notifikasi
+                                </p>
+                            @endforelse
+                        </div>
+                    </li>
+                @endcan
+                @can('approval_pinjaman_ketua')
+                    <!-- Navbar Search -->
+                    @php
+                        $notificationKetua = App\Models\Loan::whereHas('loanApproval', function ($query) {
+                            $query
+                                ->where('approved', 1)
+                                ->where('level', 1)
+                                ->orWhere('approved', 0)
+                                ->where('level', 2);
+                        })
+                            ->latest()
+                            ->paginate(3);
+                        
+                        $loanCountKetua = App\Models\Loan::whereHas('loanApproval', function ($query) {
+                            $query
+                                ->where('approved', 1)
+                                ->where('level', 1)
+                                ->orWhere('approved', 0)
+                                ->where('level', 2);
+                        })->count();
+                    @endphp
+                    <li class="nav-item dropdown">
+                        <a class="nav-link" data-toggle="dropdown" href="#">
+                            <i class="fas fa-bell"></i>
+                            <span class="badge badge-danger navbar-badge">{{ $loanCountKetua }}</span>
+                        </a>
+
+                        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                            <span class="dropdown-header">Notifications</span>
+                            <div class="dropdown-divider"></div>
+                            @forelse ($notificationKetua as $notifKetua)
+                                <a href="{{ route('admin.loans.show', $notifKetua->id) }}" class="dropdown-item">
+                                    Pengajuan Baru - <i class="fas fa-clock"></i>
+                                    {{ $notifKetua->created_at->diffForHumans() }}
+                                    <br>
+                                    <small>
+                                        <i class="fas fa-user"></i> {{ $notifKetua->studentParent->user->name }}
+                                    </small>
+                                </a>
+                            @empty
+                                <p class="dropdown-item">
+                                    Belum ada notifikasi
+                                </p>
+                            @endforelse
+                        </div>
+                    </li>
+                @endcan
+
+                <!-- Notifications Dropdown Menu -->
+                @can('create_pinjaman')
+                    <li class="nav-item dropdown">
+                        <a class="nav-link" data-toggle="dropdown" href="#">
+                            <i class="fa fa-user-circle" aria-hidden="true"></i>
+                        </a>
+                        @php
+                            $getId = Auth::user()->id;
+                        @endphp
+                        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                            <span class="dropdown-header">User Profile</span>
+                            <div class="dropdown-divider"></div>
+                            <a href="{{ route('admin.parent.get-profile', $getId) }}" class="dropdown-item">
+                                <i class="fas fa-pencil-alt"></i> Update Profile
+                            </a>
+
+                            <div class="dropdown-divider"></div>
+                        </div>
+                    </li>
+                @endcan
+
+
                 <li class="nav-item">
                     <a class="nav-link" data-widget="fullscreen" href="#" role="button">
                         <i class="fas fa-expand-arrows-alt"></i>

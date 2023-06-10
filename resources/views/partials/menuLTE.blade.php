@@ -8,7 +8,6 @@ with font-awesome or any other icon font library -->
                 <i class="nav-icon fas fa-th"></i>
                 <p>
                     Dashboard
-                    <span class="right badge badge-danger">+1</span>
                 </p>
             </a>
         </li>
