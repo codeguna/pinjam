@@ -58,13 +58,17 @@
                                                 </span>
                                             </td>
                                             <td>
-                                                @php
-                                                    $jumlahCicilan = $loan->installmentPayment->count();
-                                                    $jumlahLunas = $loan->installmentPayment->where('isPay', 1)->count();
-                                                    $persentase = ($jumlahLunas / $jumlahCicilan) * 100;
-                                                @endphp
-                                                <i class="fas fa-check"></i> {{ number_format($persentase, 2, ',', '.') }}%
-                                                Pembayaran Lunas
+                                                @if ($loan->installmentPayment->count() > 0)
+                                                    @php
+                                                        $jumlahCicilan = $loan->installmentPayment->count();
+                                                        $jumlahLunas = $loan->installmentPayment->where('isPay', 1)->count();
+                                                        $persentase = ($jumlahLunas / $jumlahCicilan) * 100;
+                                                    @endphp
+                                                    <i class="fas fa-check"></i>
+                                                    {{ number_format($persentase, 2, ',', '.') }}%
+                                                    Pembayaran Lunas
+                                                @endif
+
                                             </td>
                                             <td>
                                                 @foreach ($loan->loanApproval as $approval)

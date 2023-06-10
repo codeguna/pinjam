@@ -120,6 +120,10 @@
                                         aria-labelledby="ex1-tab-2">
                                         @include('loan.tabs.detailpinjaman')
                                     </div>
+                                    <div class="tab-pane fade" id="ex1-tabs-3" role="tabpanel"
+                                        aria-labelledby="ex1-tab-3">
+                                        @include('loan.tabs.historypembayaran')
+                                    </div>
                                 </div>
                             </div>
                         </div>

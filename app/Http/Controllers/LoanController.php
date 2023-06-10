@@ -128,20 +128,20 @@ class LoanController extends Controller
             )
         );
         LoanApproval::insert($data);
-        
-$dataPembayaran = array();
 
-for ($i = 1; $i <= $long_installment; $i++) {
-    $dataPembayaran[] = array(
-        'loan_id' => $loan->id,
-        'parent_id' => $loan->parent_id,
-        'installment' => $i,
-        'isPay' => 0,
-        'created_at' => now()
-    );
-}
+        $dataPembayaran = array();
 
-InstallmentPayment::insert($dataPembayaran);
+        for ($i = 1; $i <= $long_installment; $i++) {
+            $dataPembayaran[] = array(
+                'loan_id' => $loan->id,
+                'parent_id' => $loan->parent_id,
+                'installment' => $i,
+                'isPay' => 0,
+                'created_at' => now()
+            );
+        }
+
+        InstallmentPayment::insert($dataPembayaran);
 
         return redirect()->route('admin.loans.index')
             ->with('success', 'Loan created successfully.');
@@ -261,5 +261,24 @@ InstallmentPayment::insert($dataPembayaran);
         $user       = User::select('id')->where('name', 'like', "%{$search}%")->first();
 
         return $user;
+    }
+
+    public function paymentApprove($id)
+    {
+        $installmentPayment                 = InstallmentPayment::find($id);
+        $installmentPayment->payment_date   = now();
+        $installmentPayment->isPay          = 1;
+        $installmentPayment->update();
+
+        return redirect()->back()->with('success', 'Berhasil verifikasi pembayaran');
+    }
+    public function paymentReject($id)
+    {
+        $installmentPayment                 = InstallmentPayment::find($id);
+        $installmentPayment->payment_date   = null;
+        $installmentPayment->isPay          = 0;
+        $installmentPayment->update();
+
+        return redirect()->back()->with('warning', 'Berhasil batalkan pembayaran');
     }
 }
