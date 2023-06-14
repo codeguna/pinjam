@@ -75,7 +75,13 @@
                                                     @if ($approval->approved == 0)
                                                         <span class="badge bg-warning"
                                                             title="Belum Disetujui {{ $approval->name }}">
-                                                            <i class="fas fa-times-circle"></i>
+                                                            <i class="fas fa-question-circle"></i>
+                                                            {{ $approval->name }}
+                                                        </span>
+                                                    @elseif ($approval->approved == 2)
+                                                        <span class="badge bg-danger"
+                                                            title="Belum Disetujui {{ $approval->name }}">
+                                                            <i class="fas fa-times"></i>
                                                             {{ $approval->name }}
                                                         </span>
                                                     @else

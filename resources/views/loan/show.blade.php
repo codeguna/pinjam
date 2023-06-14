@@ -55,7 +55,7 @@
                                         <form action="{{ route('admin.loans.reject', $loan->id) }}" method="POST">
                                             @csrf
                                             <input type="hidden" name="level" value="1">
-                                            <input type="hidden" name="approved" value="0">
+                                            <input type="hidden" name="approved" value="2">
                                             @if ($ketuaApproved->approved == 1)
                                                 <button class="dropdown-item" type="submit" disabled>Tolak Pinjaman
                                                     (Bendahara)</button>
@@ -69,7 +69,7 @@
                                         <form action="{{ route('admin.loans.reject', $loan->id) }}" method="POST">
                                             @csrf
                                             <input type="hidden" name="level" value="2">
-                                            <input type="hidden" name="approved" value="0">
+                                            <input type="hidden" name="approved" value="2">
 
                                             @if ($bendaharaApproved->approved == 1)
                                                 <button class="dropdown-item" type="submit">Tolak Pinjaman (Ketua)</button>
