@@ -23,7 +23,7 @@ with font-awesome or any other icon font library -->
             </li>
             <li class="nav-item">
                 <a href="{{ route('admin.loans.index') }}"
-                    class="nav-link {{ request()->is('admin/loans') || request()->is('admin/loans/*') ? 'active' : '' }}">
+                    class="nav-link {{ request()->is('admin/loans') || request()->is('admin/loans') ? 'active' : '' }}">
                     <i class="fas fa-hand-holding-usd nav-icon"></i>
                     <p>
                         Pinjaman Saya
@@ -31,7 +31,17 @@ with font-awesome or any other icon font library -->
                 </a>
             </li>
         @endcan
-
+        @can('create_pembayaran_cicilan')
+            <li class="nav-item">
+                <a href="{{ route('admin.loans.showpayment') }}"
+                    class="nav-link {{ request()->is('admin/loan/showPayment') || request()->is('admin/loans/showPayment/*') ? 'active' : '' }}">
+                    <i class="nav-icon fas fa-money-bill"></i>
+                    <p>
+                        Pembayaran Pinjaman
+                    </p>
+                </a>
+            </li>
+        @endcan
         @canany(['approval_pinjaman_ketua', 'approval_pinjaman_bendahara'])
             <li class="nav-item {{ request()->is('admin/loans/*') || request()->is('admin/loans') ? 'menu-open' : '' }}">
                 <a href="#"

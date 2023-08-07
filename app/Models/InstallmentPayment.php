@@ -37,7 +37,7 @@ class InstallmentPayment extends Model
      *
      * @var array
      */
-    protected $fillable = ['loan_id','parent_id','installment','isPay','payment_date'];
+    protected $fillable = ['loan_id','parent_id','installment','isPay','payment_date','attachment'];
 
 
     /**

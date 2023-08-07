@@ -6,6 +6,7 @@
                     <th>Pembayaran</th>
                     <th>Tanggal Pembayaran</th>
                     <th>Status</th>
+                    <th>Bukti Pembayaran</th>
                     <th>Aksi</th>
                 </tr>
             </thead>
@@ -34,11 +35,26 @@
                                     <i class="fa fa-times" aria-hidden="true"></i>
                                     Belum Lunas
                                 </span>
+                            @elseif ($payment->isPay == 2)
+                                <span class="badge bg-warning">
+                                    <i class="fa fa-inbox" aria-hidden="true"></i>
+                                    Pembayaran Diterima
+                                </span> <br>
+                                <small class="text-danger">*Lakukan verifikasi pembayaran</small>
                             @else
                                 <span class="badge bg-success">
                                     <i class="fa fa-check" aria-hidden="true"></i>
                                     Lunas
                                 </span>
+                            @endif
+                        </td>
+                        <td>
+                            @if ($payment->attachment == null)
+                                <i class="fa fa-times-circle"></i> Belum ada bukti pembayaran
+                            @else
+                                <a href="#" target="_blank">
+                                    <i class="fa fa-paperclip" aria-hidden="true"></i>
+                                </a>
                             @endif
                         </td>
                         <td>

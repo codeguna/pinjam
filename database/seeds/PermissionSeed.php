@@ -53,5 +53,9 @@ class PermissionSeed extends Seeder
         Permission::create([
             'name'  =>  'reject_pembayaran_bendahara'
         ]);
+        Permission::create([
+            'name'  =>  'create_pembayaran_cicilan'
+        ]);
+
     }
 }

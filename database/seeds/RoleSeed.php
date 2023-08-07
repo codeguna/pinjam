@@ -19,6 +19,7 @@ class RoleSeed extends Seeder
 
         $role = Role::create(['name' => 'orang_tua']);
         $role->givePermissionTo('create_pinjaman');
+        $role->givePermissionTo('create_pembayaran_cicilan');
 
         $role = Role::create(['name' => 'bendahara']);
         $role->givePermissionTo('approval_pinjaman_bendahara');

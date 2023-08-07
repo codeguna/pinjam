@@ -30,7 +30,7 @@ class LoanController extends Controller
 
         if (Auth::user()->hasRole('orang_tua')) {
             $getId          = Auth::user()->id;
-            $getParentId     = StudentParent::where('user_id', $getId)->first();
+            $getParentId    = StudentParent::where('user_id', $getId)->first();
 
             $loans = Loan::where('parent_id', $getParentId->id)->latest()->get();
         } else {
@@ -280,5 +280,43 @@ class LoanController extends Controller
         $installmentPayment->update();
 
         return redirect()->back()->with('warning', 'Berhasil batalkan pembayaran');
+    }
+
+    public function paymentProcess(Request $request)
+    {
+        $id                                 = $request->loan_id;
+        $attachment_payment                 = $request->file('attachment_payment');
+        $file_payment                       = time() . "_" . $attachment_payment->getClientOriginalName();
+         // isi dengan nama folder tempat kemana file diupload
+        $dir_file_payment        = 'data_payment';
+ 
+        $attachment_payment->move($dir_file_payment, $file_payment);
+
+        $installmentPayment                 = InstallmentPayment::find($id);
+        $installmentPayment->payment_date   = now();
+        $installmentPayment->isPay          = 2;
+        $installmentPayment->attachment     = $file_payment;
+        $installmentPayment->update();
+
+        return redirect()->back()->with('success', 'Berhasil Melakukan Pembayaran Cicilan');
+    }
+
+    public function paymentPage($id)
+    {
+        return view();
+    }
+
+    public function showPayment(){
+        $getId          = Auth::user()->id;
+        $getParentId    = StudentParent::where('user_id', $getId)->first();
+
+        $loans = Loan::where('parent_id', $getParentId->id)->whereHas('loanApproval', function ($query) {
+            $query->where('approved', 1)->where('level', 1);
+        })->whereHas('loanApproval', function ($query) {
+            $query->where('approved', 1)->where('level', 2);
+        })->orderBy('created_at', 'DESC')->paginate();
+
+        return view('loan.mypayment', compact('loans'))
+        ->with('i');
     }
 }
