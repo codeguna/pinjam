@@ -303,7 +303,9 @@ class LoanController extends Controller
 
     public function paymentPage($id)
     {
-        return view();
+        $installmentPayment = InstallmentPayment::find($id);
+
+        return view('loan.payment.index', compact('installmentPayment'));
     }
 
     public function showPayment(){

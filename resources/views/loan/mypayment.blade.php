@@ -25,6 +25,7 @@
                                         <th>No.</th>
                                         <th>Tanggal Peminjaman</th>
                                         <th>Status Pembayaran</th>
+                                        <th>Jumlah Rp.</th>
                                         <th>Bayar Cicilan ke-</th>
                                     </tr>
                                 </thead>
@@ -37,14 +38,14 @@
                                                 {{ date('m-d-Y', strtotime($loan->loan_date)) }}
                                             </td>
                                             <td align="center">
-                                                @foreach ($loan->installmentPayment as $pembayaran)
-                                                    @if ($pembayaran->isPay == 1)
+                                                @foreach ($loan->installmentPayment as $payment)
+                                                    @if ($payment->isPay == 1)
                                                         <span class="badge badge-pill badge-success w-100">
                                                             <i class="fa fa-hashtag" aria-hidden="true">
                                                                 {{ $loop->iteration }}
                                                             </i> Sudah Lunas
                                                         </span>
-                                                    @elseif($pembayaran->isPay == 2)
+                                                    @elseif($payment->isPay == 2)
                                                         <span class="badge badge-pill badge-warning w-100">
                                                             <i class="fa fa-hashtag" aria-hidden="true">
                                                                 {{ $loop->iteration }}
@@ -61,12 +62,18 @@
                                                 @endforeach
                                             </td>
                                             <td>
-                                                @foreach ($loan->installmentPayment as $pembayaran)
-                                                    @if ($pembayaran->isPay == 0)
-                                                        <button class="btn btn-sm btn-success w-100 m-1">
+                                                @foreach ($loan->installmentPayment as $payment)
+                                                    <strong>Rp. {{ number_format($loan->loan_amount) }}</strong><br>
+                                                @endforeach
+                                            </td>
+                                            <td>
+                                                @foreach ($loan->installmentPayment as $payment)
+                                                    @if ($payment->isPay == 0)
+                                                        <a href="{{ route('admin.loans.paymentpage', $payment->id) }}"
+                                                            class="btn btn-sm btn-success w-100 m-1">
                                                             <i class="fas fa-paper-plane    "></i> Cicilan ke-
                                                             {{ $loop->iteration }}
-                                                        </button>
+                                                        </a>
                                                     @else
                                                         <button class="btn btn-sm btn-secondary w-100 m-1" disabled>
                                                             <i class="fa fa-check-square" aria-hidden="true"></i> Sudah
