@@ -12,3 +12,4 @@ npm-debug.log
 /public/data_kk/*
 /public/data_ktp_mahasiswa/*
 /public/data_ktp_ortu/*
+/public/data_payment/*

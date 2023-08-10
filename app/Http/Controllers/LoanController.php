@@ -275,7 +275,6 @@ class LoanController extends Controller
     public function paymentReject($id)
     {
         $installmentPayment                 = InstallmentPayment::find($id);
-        $installmentPayment->payment_date   = null;
         $installmentPayment->isPay          = 0;
         $installmentPayment->update();
 
@@ -289,7 +288,7 @@ class LoanController extends Controller
         $file_payment                       = time() . "_" . $attachment_payment->getClientOriginalName();
          // isi dengan nama folder tempat kemana file diupload
         $dir_file_payment        = 'data_payment';
- 
+        
         $attachment_payment->move($dir_file_payment, $file_payment);
 
         $installmentPayment                 = InstallmentPayment::find($id);
@@ -298,7 +297,7 @@ class LoanController extends Controller
         $installmentPayment->attachment     = $file_payment;
         $installmentPayment->update();
 
-        return redirect()->back()->with('success', 'Berhasil Melakukan Pembayaran Cicilan');
+        return redirect()->route('admin.loans.index')->with('success', 'Berhasil Melakukan Pembayaran Cicilan');
     }
 
     public function paymentPage($id)

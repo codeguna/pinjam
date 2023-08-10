@@ -71,7 +71,7 @@
                                                     @if ($payment->isPay == 0)
                                                         <a href="{{ route('admin.loans.paymentpage', $payment->id) }}"
                                                             class="btn btn-sm btn-success w-100 m-1">
-                                                            <i class="fas fa-paper-plane    "></i> Cicilan ke-
+                                                            <i class="fas fa-paper-plane"></i> Cicilan ke-
                                                             {{ $loop->iteration }}
                                                         </a>
                                                     @else

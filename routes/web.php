@@ -32,6 +32,7 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
     Route::get('/loan/paymentreject/{payment}', 'LoanController@paymentReject')->name('loans.paymentreject');
     Route::get('/loan/showPayment/', 'LoanController@showPayment')->name('loans.showpayment');
     Route::get('/loan/paymentpage/{payment}', 'LoanController@paymentPage')->name('loans.paymentpage');
+    Route::post('/loan/paymentprocess/', 'LoanController@paymentProcess')->name('loans.paymentprocess');
     // End of Route Loans
     // Route of Parents
     Route::resource('parents', 'StudentParentController');

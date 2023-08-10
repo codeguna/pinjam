@@ -52,13 +52,20 @@
                             @if ($payment->attachment == null)
                                 <i class="fa fa-times-circle"></i> Belum ada bukti pembayaran
                             @else
-                                <a href="#" target="_blank">
-                                    <i class="fa fa-paperclip" aria-hidden="true"></i>
+                                <a href="{{ url('/data_payment/' . $payment->attachment) }}" target="_blank">
+                                    <i class="fa fa-paperclip" aria-hidden="true"></i> Cek Lampiran
                                 </a>
                             @endif
                         </td>
                         <td>
                             @if ($payment->isPay == 0)
+                                @can('approval_pembayaran_bendahara')
+                                    <a class="btn btn-success"
+                                        href="{{ route('admin.loans.paymentapprove', $payment->id) }}">
+                                        <i class="fa fa-check-circle" aria-hidden="true"></i>
+                                    </a>
+                                @endcan
+                            @elseif ($payment->isPay == 2)
                                 @can('approval_pembayaran_bendahara')
                                     <a class="btn btn-success"
                                         href="{{ route('admin.loans.paymentapprove', $payment->id) }}">
