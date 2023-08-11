@@ -34,7 +34,7 @@ with font-awesome or any other icon font library -->
         @can('create_pembayaran_cicilan')
             <li class="nav-item">
                 <a href="{{ route('admin.loans.showpayment') }}"
-                    class="nav-link {{ request()->is('admin/loan/showPayment') || request()->is('admin/loans/showPayment/*') ? 'active' : '' }}">
+                    class="nav-link {{ request()->is('admin/loan/showPayment') || request()->is('admin/loans/showPayment/*') || request()->is('admin/loan/paymentpage') || request()->is('admin/loan/paymentpage/*') ? 'active' : '' }}">
                     <i class="nav-icon fas fa-money-bill"></i>
                     <p>
                         Pembayaran Pinjaman

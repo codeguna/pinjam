@@ -13,11 +13,13 @@
                         <h3>
                             Jumlah yang harus dibayar
                         </h3>
-                        <h3>
-                            <strong>
-                                Rp .{{ number_format($installmentPayment->loan->loan_amount) }}
-                            </strong>
-                        </h3>
+                        <div class="btn-group" role="group">
+                            <input class="form-control" type="text" id="loan_amount"
+                                value="{{ number_format($installmentPayment->loan->loan_amount) }}" readonly>
+                            <button type="button" class="btn btn-sm btn-outlined" onclick="clipboardAmount()">
+                                <i class="fas fa-copy    "></i>
+                            </button>
+                        </div>
                         <p>
                             <small class="text-muted">
                                 <i class="fa fa-question-circle" aria-hidden="true"></i>
@@ -54,7 +56,10 @@
                                                     <div>
                                                         <p class="d-flex flex-column ml-3 mb-0">
                                                             <b>Bank BRI</b><span class="small text-muted">0748 0501 2891
-                                                                222</span>
+                                                                222 <button type="button" class="btn btn-sm btn-outlined"
+                                                                    onclick="clipboardAmount()">
+                                                                    <i class="fas fa-copy"></i>
+                                                                </button></span>
                                                         </p>
                                                     </div>
                                                 </div>
@@ -72,7 +77,10 @@
                                                     <div>
                                                         <p class="d-flex flex-column ml-3 mb-0">
                                                             <b>Bank BNI</b><span class="small text-muted">9884 4808 2542
-                                                                7711</span>
+                                                                7711 <button type="button" class="btn btn-sm btn-outlined"
+                                                                    onclick="clipboardAmount()">
+                                                                    <i class="fas fa-copy    "></i>
+                                                                </button></span>
                                                         </p>
                                                     </div>
                                                 </div>
@@ -108,4 +116,22 @@
     </div>
     </div>
     </div>
+@endsection
+@section('scripts')
+    <script>
+        function clipboardAmount() {
+            // Get the text field
+            var copyText = document.getElementById("loan_amount");
+
+            // Select the text field
+            copyText.select();
+            copyText.setSelectionRange(0, 99999); // For mobile devices
+
+            // Copy the text inside the text field
+            navigator.clipboard.writeText(copyText.value);
+
+            // Alert the copied text
+            alert("Nominal pembayaran berhasil disalin: " + copyText.value);
+        }
+    </script>
 @endsection
