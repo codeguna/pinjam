@@ -40,7 +40,7 @@ class GoogleController extends Controller
 
                 Auth::login($finduser);
 
-                return redirect()->intended('dashboard');
+                return redirect()->intended('admin/home');
             } else {
                 $newUser = User::create([
                     'name' => $user->name,
