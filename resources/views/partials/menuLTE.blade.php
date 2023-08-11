@@ -63,6 +63,35 @@ with font-awesome or any other icon font library -->
                 </ul>
             </li>
         @endcanany
+        @can('view_report')
+            <li
+                class="nav-item {{ request()->is('admin/loan/loanlogs/*') || request()->is('admin/loan/loanlogs') || request()->is('admin/loan/paymentlogs') || request()->is('admin/loan/paymentlogs/*') ? 'menu-open' : '' }}">
+                <a href="#"
+                    class="nav-link {{ request()->is('admin/loan/loanlogs/*') || request()->is('admin/loan/loanlogs') || request()->is('admin/loan/paymentlogs') || request()->is('admin/loan/paymentlogs/*') ? 'active' : '' }}">
+                    <i class="fas fa-money-bill nav-icon"></i>
+                    <p>
+                        Laporan
+                        <i class="right fas fa-angle-left"></i>
+                    </p>
+                </a>
+                <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                        <a href="{{ route('admin.loans.loanlog') }}"
+                            class="nav-link {{ request()->is('admin/loan/loanlogs') || request()->is('admin/loan/loanlogs/*') ? 'active' : '' }}">
+                            <i class="fas fa-door-open nav-icon"></i>
+                            <p>Riwayat Peminjaman</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('admin.loans.paymentlog') }}"
+                            class="nav-link {{ request()->is('admin/loan/paymentlogs') || request()->is('admin/loan/paymentlogs/*') ? 'active' : '' }}">
+                            <i class="fas fa-door-open nav-icon"></i>
+                            <p>Riwayat Pembayaran</p>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        @endcan
 
         @can('data_master_manage')
             <li

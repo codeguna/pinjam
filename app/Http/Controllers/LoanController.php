@@ -320,4 +320,11 @@ class LoanController extends Controller
         return view('loan.mypayment', compact('loans'))
         ->with('i');
     }
+
+    public function loanLog(){
+        return view('loan.report.pinjaman');
+    }
+    public function paymentLog(){
+        return view('loan.report.pembayaran');
+    }
 }

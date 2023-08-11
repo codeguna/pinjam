@@ -33,5 +33,6 @@ class RoleSeed extends Seeder
         $role->givePermissionTo('approval_pinjaman_ketua');
         $role->givePermissionTo('reject_pinjaman_ketua');
         $role->givePermissionTo('show_pinjaman');
+        $role->givePermissionTo('view_report');
     }
 }

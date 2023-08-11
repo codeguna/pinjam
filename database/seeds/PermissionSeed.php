@@ -56,6 +56,9 @@ class PermissionSeed extends Seeder
         Permission::create([
             'name'  =>  'create_pembayaran_cicilan'
         ]);
+        Permission::create([
+            'name'  =>  'view_report'
+        ]);
 
     }
 }
