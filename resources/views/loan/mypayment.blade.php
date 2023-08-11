@@ -86,7 +86,7 @@
                                         </tr>
                                     @empty
                                         <tr align="center">
-                                            <td colspan="4">
+                                            <td colspan="5">
                                                 <div class="alert alert-warning" role="alert">
                                                     <strong>
                                                         <i class="fa fa-info" aria-hidden="true"></i>

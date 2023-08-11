@@ -23,7 +23,7 @@ with font-awesome or any other icon font library -->
             </li>
             <li class="nav-item">
                 <a href="{{ route('admin.loans.index') }}"
-                    class="nav-link {{ request()->is('admin/loans') || request()->is('admin/loans') ? 'active' : '' }}">
+                    class="nav-link {{ request()->is('admin/loans') || request()->is('admin/loans/*') ? 'active' : '' }}">
                     <i class="fas fa-hand-holding-usd nav-icon"></i>
                     <p>
                         Pinjaman Saya

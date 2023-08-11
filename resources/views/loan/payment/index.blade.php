@@ -14,10 +14,14 @@
                             Jumlah yang harus dibayar
                         </h3>
                         <div class="btn-group" role="group">
-                            <input class="form-control" type="text" id="loan_amount"
-                                value="{{ number_format($installmentPayment->loan->loan_amount) }}" readonly>
-                            <button type="button" class="btn btn-sm btn-outlined" onclick="clipboardAmount()">
-                                <i class="fas fa-copy    "></i>
+                            <h4>
+                                Rp. {{ number_format($installmentPayment->loan->loan_amount) }}
+                            </h4>
+                            <input type="hidden" id="loan_amount"
+                                value="{{ number_format($installmentPayment->loan->loan_amount) }}" />
+                            <button id="copyButtonAmount" type="button" class="btn btn-sm btn-outlined"
+                                onclick="clipboardAmount()">
+                                <i class="fas fa-copy"></i>
                             </button>
                         </div>
                         <p>
@@ -56,10 +60,15 @@
                                                     <div>
                                                         <p class="d-flex flex-column ml-3 mb-0">
                                                             <b>Bank BRI</b><span class="small text-muted">0748 0501 2891
-                                                                222 <button type="button" class="btn btn-sm btn-outlined"
-                                                                    onclick="clipboardAmount()">
+                                                                222
+                                                                <input type="hidden" id="accountBank1"
+                                                                    value="074805012891222" />
+                                                                <button id="copyButtonAccount1" type="button"
+                                                                    class="btn btn-sm btn-outlined"
+                                                                    onclick="clipboardBank1()">
                                                                     <i class="fas fa-copy"></i>
-                                                                </button></span>
+                                                                </button>
+                                                            </span>
                                                         </p>
                                                     </div>
                                                 </div>
@@ -77,10 +86,15 @@
                                                     <div>
                                                         <p class="d-flex flex-column ml-3 mb-0">
                                                             <b>Bank BNI</b><span class="small text-muted">9884 4808 2542
-                                                                7711 <button type="button" class="btn btn-sm btn-outlined"
-                                                                    onclick="clipboardAmount()">
-                                                                    <i class="fas fa-copy    "></i>
-                                                                </button></span>
+                                                                7711
+                                                                <input type="hidden" id="accountBank2"
+                                                                    value="9884480825427711" />
+                                                                <button id="copyButtonAccount2" type="button"
+                                                                    class="btn btn-sm btn-outlined"
+                                                                    onclick="clipboardBank2()">
+                                                                    <i class="fas fa-copy"></i>
+                                                                </button>
+                                                            </span>
                                                         </p>
                                                     </div>
                                                 </div>
@@ -120,18 +134,48 @@
 @section('scripts')
     <script>
         function clipboardAmount() {
-            // Get the text field
-            var copyText = document.getElementById("loan_amount");
+            var hiddenField = document.getElementById("loan_amount");
+            var valueToCopy = hiddenField.value;
 
-            // Select the text field
-            copyText.select();
-            copyText.setSelectionRange(0, 99999); // For mobile devices
+            var tempInput = document.createElement("input");
+            tempInput.value = valueToCopy;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand("copy");
+            document.body.removeChild(tempInput);
 
-            // Copy the text inside the text field
-            navigator.clipboard.writeText(copyText.value);
+            alert("Nominal berhasil disalin ke clipboard: " + valueToCopy);
+            document.getElementById("copyButtonAmount").addEventListener("click", clipboardAmount);
+        }
 
-            // Alert the copied text
-            alert("Nominal pembayaran berhasil disalin: " + copyText.value);
+        function clipboardBank1() {
+            var hiddenField = document.getElementById("accountBank1");
+            var valueToCopy = hiddenField.value;
+
+            var tempInput = document.createElement("input");
+            tempInput.value = valueToCopy;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand("copy");
+            document.body.removeChild(tempInput);
+
+            alert("Nomor Rekening berhasil disalin ke clipboard: " + valueToCopy);
+            document.getElementById("copyButtonAccount1").addEventListener("click", clipboardBank1);
+        }
+
+        function clipboardBank2() {
+            var hiddenField = document.getElementById("accountBank2");
+            var valueToCopy = hiddenField.value;
+
+            var tempInput = document.createElement("input");
+            tempInput.value = valueToCopy;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand("copy");
+            document.body.removeChild(tempInput);
+
+            alert("Nomor Rekening berhasil disalin ke clipboard: " + valueToCopy);
+            document.getElementById("copyButtonAccount2").addEventListener("click", clipboardBank2);
         }
     </script>
 @endsection
