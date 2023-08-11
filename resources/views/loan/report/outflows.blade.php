@@ -95,6 +95,9 @@
                                             @endif
                                         </h6>
                                     </div>
+                                    <div class="col-md-12">
+                                        <hr>
+                                    </div>
                                 @empty
                                 @endforelse
                             </div>
