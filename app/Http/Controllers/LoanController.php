@@ -114,7 +114,7 @@ class LoanController extends Controller
                 'loan_id'       => $loan->id,
                 'parent_id'     => $loan->parent_id,
                 'name'          => 'Bendahara',
-                'approved'      => 0,
+                'approved'      => 2,
                 'level'         => 1,
                 'created_at'    => now()
             ),
@@ -122,7 +122,7 @@ class LoanController extends Controller
                 'loan_id'       => $loan->id,
                 'parent_id'     => $loan->parent_id,
                 'name'          => 'Ketua',
-                'approved'      => 0,
+                'approved'      => 2,
                 'level'         => 2,
                 'created_at'    => now(),
             )
@@ -321,10 +321,12 @@ class LoanController extends Controller
         ->with('i');
     }
 
-    public function loanLog(){
-        return view('loan.report.pinjaman');
+    public function outflows(){
+        $loans  = Loan::latest()->paginate();
+        return view('loan.report.outflows',compact('loans'))->with('i');
     }
-    public function paymentLog(){
-        return view('loan.report.pembayaran');
+    public function inflows(){
+        $installment_payments  = InstallmentPayment::where('isPay',1)->latest()->paginate();
+        return view('loan.report.inflows',compact('installment_payments'))->with('i');
     }
 }

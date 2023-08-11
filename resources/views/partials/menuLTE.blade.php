@@ -65,10 +65,10 @@ with font-awesome or any other icon font library -->
         @endcanany
         @can('view_report')
             <li
-                class="nav-item {{ request()->is('admin/loan/loanlogs/*') || request()->is('admin/loan/loanlogs') || request()->is('admin/loan/paymentlogs') || request()->is('admin/loan/paymentlogs/*') ? 'menu-open' : '' }}">
+                class="nav-item {{ request()->is('admin/loan/outflows/*') || request()->is('admin/loan/outflows') || request()->is('admin/loan/inflows/*') || request()->is('admin/loan/inflows') ? 'menu-open' : '' }}">
                 <a href="#"
-                    class="nav-link {{ request()->is('admin/loan/loanlogs/*') || request()->is('admin/loan/loanlogs') || request()->is('admin/loan/paymentlogs') || request()->is('admin/loan/paymentlogs/*') ? 'active' : '' }}">
-                    <i class="fas fa-money-bill nav-icon"></i>
+                    class="nav-link {{ request()->is('admin/loan/outflows/*') || request()->is('admin/loan/outflows') || request()->is('admin/loan/inflows/*') || request()->is('admin/loan/inflows') ? 'active' : '' }}">
+                    <i class="fa fa-book nav-icon" aria-hidden="true"></i>
                     <p>
                         Laporan
                         <i class="right fas fa-angle-left"></i>
@@ -76,17 +76,17 @@ with font-awesome or any other icon font library -->
                 </a>
                 <ul class="nav nav-treeview">
                     <li class="nav-item">
-                        <a href="{{ route('admin.loans.loanlog') }}"
-                            class="nav-link {{ request()->is('admin/loan/loanlogs') || request()->is('admin/loan/loanlogs/*') ? 'active' : '' }}">
-                            <i class="fas fa-door-open nav-icon"></i>
-                            <p>Riwayat Peminjaman</p>
+                        <a href="{{ route('admin.loans.outflows') }}"
+                            class="nav-link {{ request()->is('admin/loan/outflows') || request()->is('admin/loan/outflows/*') ? 'active' : '' }}">
+                            <i class="fa fa-arrow-up nav-icon" aria-hidden="true"></i>
+                            <p>Dana Keluar</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('admin.loans.paymentlog') }}"
-                            class="nav-link {{ request()->is('admin/loan/paymentlogs') || request()->is('admin/loan/paymentlogs/*') ? 'active' : '' }}">
-                            <i class="fas fa-door-open nav-icon"></i>
-                            <p>Riwayat Pembayaran</p>
+                        <a href="{{ route('admin.loans.inflows') }}"
+                            class="nav-link {{ request()->is('admin/loan/inflows') || request()->is('admin/loan/inflows/*') ? 'active' : '' }}">
+                            <i class="fa fa-arrow-down nav-icon" aria-hidden="true"></i>
+                            <p>Dana Masuk</p>
                         </a>
                     </li>
                 </ul>

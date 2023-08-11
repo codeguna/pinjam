@@ -53,7 +53,7 @@ class InstallmentPayment extends Model
      */
     public function studentParent()
     {
-        return $this->belongsTo('App\Models\StudentParent', 'id', 'parent_id');
+        return $this->belongsTo('App\Models\StudentParent', 'parent_id', 'id');
     }
     
 

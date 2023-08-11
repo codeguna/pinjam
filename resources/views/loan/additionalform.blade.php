@@ -36,7 +36,8 @@
     <div class="col-md-12">
         <div class="form-group">
             <label>Nomor Rekening</label>
-            <input type="number" min="0" maxlength="10" class="form-control" name="account_number" required>
+            <input type="number" min="0" maxlength="10" oninput="truncateInputValue(this)" class="form-control"
+                name="account_number" required>
             <small class="form-text text-info">*Bank BNI</small>
         </div>
     </div>
@@ -86,6 +87,12 @@
 
             var loanAmount = installmentAmount / loanDuration;
             loanAmountInput.value = loanAmount.toFixed(2);
+        }
+
+        function truncateInputValue(input) {
+            if (input.value.length > 10) {
+                input.value = input.value.slice(0, 10);
+            }
         }
     </script>
 @endsection
