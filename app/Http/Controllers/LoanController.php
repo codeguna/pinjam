@@ -322,11 +322,11 @@ class LoanController extends Controller
     }
 
     public function outflows(){
-        $loans  = Loan::latest()->paginate();
+        $loans  = Loan::latest('updated_at')->paginate();
         return view('loan.report.outflows',compact('loans'))->with('i');
     }
     public function inflows(){
-        $installment_payments  = InstallmentPayment::where('isPay',1)->latest()->paginate();
+        $installment_payments  = InstallmentPayment::where('isPay',1)->latest('updated_at')->paginate();
         return view('loan.report.inflows',compact('installment_payments'))->with('i');
     }
 }
