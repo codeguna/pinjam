@@ -111,6 +111,11 @@
                                         <hr>
                                     </div>
                                 @empty
+                                    <div class="col-md-12">
+                                        <h3>
+                                            <i class="fa fa-info-circle" aria-hidden="true"></i> Belum ada Dana Keluar
+                                        </h3>
+                                    </div>
                                 @endforelse
                             </div>
                             {!! $loans->links() !!}
