@@ -330,56 +330,37 @@ class LoanController extends Controller
         $installment_payments  = InstallmentPayment::where('isPay',1)->latest('updated_at')->paginate();
         return view('loan.report.inflows',compact('installment_payments'))->with('i');
     }
-    public function outflowsSearch(Request $request){
-        $filter = $request->filter;
-        $days   = $request->days;
-        
-        
-        if($days == 'today'){
-            $startDate  = Carbon::today();
-            $loans      = Loan::whereHas('installmentPayment', function ($query) use ($filter) {
-                $query->where('isPay', $filter);
-            })->whereDate('updated_at', '>=', $startDate)->latest('updated_at')->paginate();
-        }elseif($days == '7'){
-            $startDate  = Carbon::now()->subDays(7);
-            $loans      = Loan::whereHas('installmentPayment', function ($query) use ($filter) {
-                $query->where('isPay', $filter);
-            })->whereDate('updated_at', '>=', $startDate)->latest('updated_at')->paginate();
-        }elseif($days == '30'){
-            $startDate  = Carbon::now()->subDays(30);
-            $loans      = Loan::whereHas('installmentPayment', function ($query) use ($filter) {
-                $query->where('isPay', $filter);
-            })->whereDate('updated_at', '>=', $startDate)->latest('updated_at')->paginate();
-        }elseif($days == '60'){
-            $startDate  = Carbon::now()->subDays(60);
-            $loans      = Loan::whereHas('installmentPayment', function ($query) use ($filter) {
-                $query->where('isPay', $filter);
-            })->whereDate('updated_at', '>=', $startDate)->latest('updated_at')->paginate();
-        }else{
-            $loans = Loan::latest('updated_at')->paginate();
-        }
-            return view('loan.report.outflows',compact('loans'))->with('i');
+    public function outflowsSearch(Request $request)
+{
+    $days = $request->days;
+    $startDate = null;
+
+    if (in_array($days, ['today', '7', '30', '60'])) {
+        $startDate = Carbon::now()->subDays($days == 'today' ? 0 : (int)$days);
     }
-    public function inflowsSearch(Request $request){
-        $days   = $request->days;
-        
-        
-        if($days == 'today'){  
-            $startDate  = Carbon::today();     
-            $installment_payments  = InstallmentPayment::whereDate('updated_at', $startDate)->latest('updated_at')->paginate();
-        }elseif($days == '7'){        
-            $startDate  = Carbon::now()->subDays(7);
-            $installment_payments  = InstallmentPayment::whereDate('updated_at', '>=', $startDate)->latest('updated_at')->paginate();
-        }elseif($days == '30'){
-            $startDate  = Carbon::now()->subDays(30);
-            $installment_payments  = InstallmentPayment::whereDate('updated_at', '>=', $startDate)->latest('updated_at')->paginate();
-        }elseif($days == '60'){
-            $startDate  = Carbon::now()->subDays(60);
-            $installment_payments  = InstallmentPayment::whereDate('updated_at', '>=', $startDate)->latest('updated_at')->paginate();
-        }else{
-            $installment_payments  = InstallmentPayment::where('isPay',1)->latest('updated_at')->paginate();
+
+    $query = Loan::when($startDate, function ($query) use ($startDate) {
+        return $query->whereDate('updated_at', '>=', $startDate);
+    });
+
+    $loans = $query->latest('updated_at')->paginate();
+
+    return view('loan.report.outflows', compact('loans'))->with('i');
+}
+    public function inflowsSearch(Request $request)
+    {
+        $days = $request->days;
+    
+        if ($days == 'today' || $days == '7' || $days == '30' || $days == '60') {
+            $startDate = Carbon::now()->subDays($days == 'today' ? 0 : (int)$days);
+            $query = InstallmentPayment::whereDate('updated_at', '>=', $startDate);
+        } else {
+            $query = InstallmentPayment::where('isPay', 1);
         }
-            return view('loan.report.inflows',compact('installment_payments'))->with('i');
+    
+        $installment_payments = $query->latest('updated_at')->paginate();
+    
+        return view('loan.report.inflows', compact('installment_payments'))->with('i');
     }
     
 }

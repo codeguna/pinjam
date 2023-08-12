@@ -18,7 +18,7 @@
                                 <form action="{{ route('admin.loans.outflows.search') }}" method="GET">
                                     @csrf
 
-                                    <div class="btn-group" data-toggle="buttons">
+                                    {{-- <div class="btn-group" data-toggle="buttons">
                                         <label class="btn btn-outline-primary">
                                             <input type="radio" name="filter" style="display: none;" value="all">
                                             <i class="fa fa-list" aria-hidden="true"></i> Semua
@@ -35,7 +35,7 @@
                                             <input type="radio" name="filter" style="display: none;" value="failed">
                                             <i class="fa fa-times-circle" aria-hidden="0"></i> Gagal
                                         </label>
-                                    </div>
+                                    </div> --}}
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
