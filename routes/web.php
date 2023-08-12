@@ -35,6 +35,8 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
     Route::post('/loan/paymentprocess/', 'LoanController@paymentProcess')->name('loans.paymentprocess');
     Route::get('/loan/outflows/', 'LoanController@outflows')->name('loans.outflows');
     Route::get('/loan/inflows/', 'LoanController@inflows')->name('loans.inflows');
+    Route::get('/loan/outflows/filter', 'LoanController@outflowsSearch')->name('loans.outflows.search');
+    Route::get('/loan/inflows/filter', 'LoanController@inflowsSearch')->name('loans.inflows.search');
     // End of Route Loans
     // Route of Parents
     Route::resource('parents', 'StudentParentController');

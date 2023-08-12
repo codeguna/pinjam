@@ -28,7 +28,7 @@ class HomeController extends Controller
         $user = Auth::user();
         $getId = $user->id;
         if ($user && $user->hasRole('orang_tua') && $user->parent->student->nim === '000000000') {
-            return redirect('admin/parents/get-profile/'.$getId);
+            return redirect('admin/parents/get-profile/'.$getId)->with('warning','Silahkan update profile terlebih dahulu');
         }
         return view('homeLTE');
     }

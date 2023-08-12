@@ -15,34 +15,45 @@
                                 <h5>
                                     <strong>Filter:</strong>
                                 </h5>
-                                <div class="btn-group" data-toggle="buttons">
-                                    <label class="btn btn-outline-primary">
-                                        <input type="radio" name="filter" style="display: none;" value="all">
-                                        <i class="fa fa-list" aria-hidden="true"></i> Semua
-                                    </label>
-                                    <label class="btn btn-outline-success">
-                                        <input type="radio" name="filter" style="display: none;" value="success">
-                                        <i class="fa fa-check-circle" aria-hidden="true"></i> Berhasil
-                                    </label>
-                                    <label class="btn btn-outline-warning">
-                                        <input type="radio" name="filter" style="display: none;" value="process">
-                                        <i class="fa fa-hourglass" aria-hidden="true"></i> Sedang Diproses
-                                    </label>
-                                    <label class="btn btn-outline-danger">
-                                        <input type="radio" name="filter" style="display: none;" value="failed">
-                                        <i class="fa fa-times-circle" aria-hidden="true"></i> Gagal
-                                    </label>
-                                </div>
+                                <form action="{{ route('admin.loans.outflows.search') }}" method="GET">
+                                    @csrf
+
+                                    <div class="btn-group" data-toggle="buttons">
+                                        <label class="btn btn-outline-primary">
+                                            <input type="radio" name="filter" style="display: none;" value="all">
+                                            <i class="fa fa-list" aria-hidden="true"></i> Semua
+                                        </label>
+                                        <label class="btn btn-outline-success">
+                                            <input type="radio" name="filter" style="display: none;" value="1">
+                                            <i class="fa fa-check-circle" aria-hidden="true"></i> Berhasil
+                                        </label>
+                                        <label class="btn btn-outline-warning">
+                                            <input type="radio" name="filter" style="display: none;" value="process">
+                                            <i class="fa fa-hourglass" aria-hidden="2"></i> Sedang Diproses
+                                        </label>
+                                        <label class="btn btn-outline-danger">
+                                            <input type="radio" name="filter" style="display: none;" value="failed">
+                                            <i class="fa fa-times-circle" aria-hidden="0"></i> Gagal
+                                        </label>
+                                    </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label>Pilih Tanggal:</label>
                                     <select class="form-control" name="days" required>
-                                        <option value="all">Semua Tanggal</option>
-                                        <option value="today">Hari Ini</option>
-                                        <option value="7">7 Hari Terakhir</option>
-                                        <option value="30">30 Hari Terakhir</option>
-                                        <option value="60">60 Hari Terakhir</option>
+                                        <option disabled>== Pilih Tanggal
+                                            ==</option>
+                                        <option value="all" @if (request('days') === 'all') selected @endif>Semua
+                                            Tanggal</option>
+                                        <option value="today" @if (request('days') === 'today') selected @endif>Hari
+                                            Ini
+                                        </option>
+                                        <option value="7" @if (request('days') === '7') selected @endif>7 Hari
+                                            Terakhir</option>
+                                        <option value="30" @if (request('days') === '30') selected @endif>30 Hari
+                                            Terakhir</option>
+                                        <option value="60" @if (request('days') === '60') selected @endif>60 Hari
+                                            Terakhir</option>
                                     </select>
                                 </div>
                             </div>
@@ -51,6 +62,7 @@
                                     <i class="fa fa-filter" aria-hidden="true"></i> Submit
                                 </button>
                             </div>
+                            </form>
                         </div>
                     </div>
                     <div class="card-body">
