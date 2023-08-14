@@ -332,7 +332,11 @@ class LoanController extends Controller
     }
     public function outflowsSearch(Request $request)
 {
-    $days = $request->days;
+    $days           = $request->days;
+    $student_name   = $request->student_name;
+    $parent_name    = $request->parent_name;
+    $nim            = $request->nim;
+
     $startDate = null;
 
     if (in_array($days, ['today', '7', '30', '60'])) {
@@ -349,8 +353,11 @@ class LoanController extends Controller
 }
     public function inflowsSearch(Request $request)
     {
-        $days = $request->days;
-    
+        $days           = $request->days;
+        $student_name   = $request->student_name;
+        $parent_name    = $request->parent_name;
+        $nim            = $request->nim;
+
         if ($days == 'today' || $days == '7' || $days == '30' || $days == '60') {
             $startDate = Carbon::now()->subDays($days == 'today' ? 0 : (int)$days);
             $query = InstallmentPayment::whereDate('updated_at', '>=', $startDate);
