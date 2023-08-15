@@ -38,19 +38,17 @@
                                     </div> --}}
                             </div>
                             <div class="col-md-6">
-                                <form action="{{ route('admin.loans.inflows.search') }}" method="GET">
-                                    @csrf
-                                    <div class="form-group">
-                                        <label>Nama Orang Tua:</label>
-                                        <select class="form-control" name="parent_name">
-                                            <option disabled selected>== Pilih Nama Orang Tua ==</option>
-                                            @foreach ($parents as $parent)
-                                                <option value="{{ $parent->id }}">
-                                                    {{ $parent->name }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                    </div>
+                                <div class="form-group">
+                                    <label>Nama Orang Tua:</label>
+                                    <select class="form-control" name="parent_name">
+                                        <option disabled selected>== Pilih Nama Orang Tua ==</option>
+                                        @foreach ($parents as $parent)
+                                            <option value="{{ $parent->id }}">
+                                                {{ $parent->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
