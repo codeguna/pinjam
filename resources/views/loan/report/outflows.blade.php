@@ -37,6 +37,40 @@
                                         </label>
                                     </div> --}}
                             </div>
+                            <div class="col-md-6">
+                                <form action="{{ route('admin.loans.inflows.search') }}" method="GET">
+                                    @csrf
+                                    <div class="form-group">
+                                        <label>Nama Orang Tua:</label>
+                                        <select class="form-control" name="parent_name">
+                                            <option disabled selected>== Pilih Nama Orang Tua ==</option>
+                                            @foreach ($parents as $parent)
+                                                <option value="{{ $parent->id }}">
+                                                    {{ $parent->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Nama Mahasiswa:</label>
+                                    <select class="form-control" name="student_name">
+                                        <option disabled selected>== Pilih Nama Mahasiswa ==</option>
+                                        @foreach ($students as $student)
+                                            <option value="{{ $student->parent_id }}">
+                                                {{ $student->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>NIM Mahasiswa:</label>
+                                    <input type="text" class="form-control" name="nim" placeholder="1234567890">
+                                </div>
+                            </div>
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label>Pilih Tanggal:</label>

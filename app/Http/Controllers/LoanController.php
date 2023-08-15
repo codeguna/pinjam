@@ -323,8 +323,8 @@ class LoanController extends Controller
     }
 
     public function outflows(){
-        $parents        = StudentParent::pluck('name','id');
-        $students       = Student::pluck('name','parent_id');
+        $parents        = StudentParent::select('user_id')->get();
+        $students       = Student::select('name','parent_id')->get();
         $loans  = Loan::latest('updated_at')->paginate();
         return view('loan.report.outflows',compact('loans','parents','students'))->with('i');
     }
@@ -366,12 +366,25 @@ class LoanController extends Controller
         $student_name   = $request->student_name;
         $parent_name    = $request->parent_name;
         $nim            = $request->nim;        
+        
 
         if ($days == 'today' || $days == '7' || $days == '30' || $days == '60') {
             $startDate = Carbon::now()->subDays($days == 'today' ? 0 : (int)$days);
             $query = InstallmentPayment::whereDate('updated_at', '>=', $startDate);
         } else {
             $query = InstallmentPayment::where('isPay', 1);
+        }
+        
+        if ($parent_name !== null) {
+            $query->where('parent_id', $parent_name);
+        }
+        
+        if ($nim !== null) {
+            $query->orWhere('nim', $nim);
+        }
+        
+        if ($student_name !== null) {
+            $query->orWhere('student_id', $student_name);
         }
     
         $installment_payments = $query->latest('updated_at')->paginate();

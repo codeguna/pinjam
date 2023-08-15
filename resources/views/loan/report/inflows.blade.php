@@ -35,17 +35,19 @@
                                 </div>
                             </div> --}}
                             <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Nama Orang Tua:</label>
-                                    <select class="form-control" name="parent_name">
-                                        <option disabled selected>== Pilih Nama Orang Tua ==</option>
-                                        @foreach ($parents as $parent)
-                                            <option value="{{ $parent->id }}">
-                                                {{ $parent->name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
+                                <form action="{{ route('admin.loans.inflows.search') }}" method="GET">
+                                    @csrf
+                                    <div class="form-group">
+                                        <label>Nama Orang Tua:</label>
+                                        <select class="form-control" name="parent_name">
+                                            <option disabled selected>== Pilih Nama Orang Tua ==</option>
+                                            @foreach ($parents as $parent)
+                                                <option value="{{ $parent->id }}">
+                                                    {{ $parent->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -67,26 +69,24 @@
                                 </div>
                             </div>
                             <div class="col-md-12">
-                                <form action="{{ route('admin.loans.inflows.search') }}" method="GET">
-                                    @csrf
-                                    <div class="form-group">
-                                        <label>Pilih Tanggal:</label>
-                                        <select class="form-control" name="days" required>
-                                            <option disabled>== Pilih Tanggal
-                                                ==</option>
-                                            <option value="all" @if (request('days') === 'all') selected @endif>Semua
-                                                Tanggal</option>
-                                            <option value="today" @if (request('days') === 'today') selected @endif>Hari
-                                                Ini
-                                            </option>
-                                            <option value="7" @if (request('days') === '7') selected @endif>7 Hari
-                                                Terakhir</option>
-                                            <option value="30" @if (request('days') === '30') selected @endif>30 Hari
-                                                Terakhir</option>
-                                            <option value="60" @if (request('days') === '60') selected @endif>60 Hari
-                                                Terakhir</option>
-                                        </select>
-                                    </div>
+                                <div class="form-group">
+                                    <label>Pilih Tanggal:</label>
+                                    <select class="form-control" name="days" required>
+                                        <option disabled>== Pilih Tanggal
+                                            ==</option>
+                                        <option value="all" @if (request('days') === 'all') selected @endif>Semua
+                                            Tanggal</option>
+                                        <option value="today" @if (request('days') === 'today') selected @endif>Hari
+                                            Ini
+                                        </option>
+                                        <option value="7" @if (request('days') === '7') selected @endif>7 Hari
+                                            Terakhir</option>
+                                        <option value="30" @if (request('days') === '30') selected @endif>30 Hari
+                                            Terakhir</option>
+                                        <option value="60" @if (request('days') === '60') selected @endif>60 Hari
+                                            Terakhir</option>
+                                    </select>
+                                </div>
                             </div>
                             <div class="col-md-12">
                                 <button class="btn btn-warning w-100" type="submit">
