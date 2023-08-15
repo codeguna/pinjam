@@ -323,73 +323,98 @@ class LoanController extends Controller
     }
 
     public function outflows(){
-        $parents        = StudentParent::select('user_id')->get();
+        $parents        = StudentParent::select('id','user_id')->get();
         $students       = Student::select('name','parent_id')->get();
         $loans  = Loan::latest('updated_at')->paginate();
         return view('loan.report.outflows',compact('loans','parents','students'))->with('i');
     }
     public function inflows(){
 
-        $parents        = User::select('id', 'name')
-                            ->whereHas('roles', function ($query) {
-                                $query->where('name', 'orang_tua');
-                            })->orderBy('name')->get();
-
-        $students       = Student::select('name','parent_id')->orderBy('name')->get();
+        $parents        = StudentParent::select('id','user_id')->get();
+        $students       = Student::select('name','parent_id')->get();
         $installment_payments  = InstallmentPayment::where('isPay',1)->latest('updated_at')->paginate();
         return view('loan.report.inflows',compact('installment_payments','parents','students'))->with('i');
     }
-    public function outflowsSearch(Request $request)
-{
-    $days           = $request->days;
-    $student_name   = $request->student_name;
-    $parent_name    = $request->parent_name;
-    $nim            = $request->nim;
-    
-    $startDate = null;
+    public function outflowsSearch(Request $request){
+        $filter_parent_name     = $request->parent_name;
+        $filter_nim             = $request->nim;
+        $filter_student_name    = $request->student_name;
+        $days                   = $request->days;
 
-    if (in_array($days, ['today', '7', '30', '60'])) {
-        $startDate = Carbon::now()->subDays($days == 'today' ? 0 : (int)$days);
+        $parents        = StudentParent::select('user_id','id')->get();
+        $students       = Student::select('name','parent_id')->get();
+
+        if($days == 'today'){
+            $startDate  = Carbon::today();
+            $loans      = Loan::whereHas('installmentPayment', function ($query) use ($filter_parent_name, $filter_student_name) {
+                $query->where('parent_id', $filter_parent_name)
+                ->orWhere('parent_id',$filter_student_name);
+            })->whereDate('updated_at', '>=', $startDate)->latest('updated_at')->paginate();
+        }elseif($days == '7'){
+            $startDate  = Carbon::now()->subDays(7);
+            $loans      = Loan::whereHas('installmentPayment', function ($query) use ($filter_parent_name, $filter_student_name) {
+                $query->where('parent_id', $filter_parent_name)
+                ->orWhere('parent_id',$filter_student_name);
+            })->whereDate('updated_at', '>=', $startDate)->latest('updated_at')->paginate();
+        }elseif($days == '30'){
+            $startDate  = Carbon::now()->subDays(30);
+            $loans      = Loan::whereHas('installmentPayment', function ($query) use ($filter_parent_name, $filter_student_name) {
+                $query->where('parent_id', $filter_parent_name)
+                ->orWhere('parent_id',$filter_student_name);
+            })->whereDate('updated_at', '>=', $startDate)->latest('updated_at')->paginate();
+        }elseif($days == '60'){
+            $startDate  = Carbon::now()->subDays(60);
+            $loans      = Loan::whereHas('installmentPayment', function ($query) use ($filter_parent_name, $filter_student_name) {
+                $query->where('parent_id', $filter_parent_name)
+                ->orWhere('parent_id',$filter_student_name);
+            })->whereDate('updated_at', '>=', $startDate)->latest('updated_at')->paginate();
+        }else{
+            $loans = Loan::latest('updated_at')->paginate();
+        }
+            return view('loan.report.outflows',compact('loans','parents','students'))->with('i');
     }
+    public function inflowsSearch(Request $request){
+        $filter_parent_name     = $request->parent_name;
+        $filter_nim             = $request->nim;
+        $filter_student_name    = $request->student_name;
+        $days   = $request->days;
+        $parents        = StudentParent::select('user_id','id')->get();
+        $students       = Student::select('name','parent_id')->get();   
 
-    $query = Loan::when($startDate, function ($query) use ($startDate) {
-        return $query->whereDate('updated_at', '>=', $startDate);
-    });
+        if($days == 'today'){  
+            $startDate  = Carbon::today();     
+            $installment_payments  = InstallmentPayment::whereDate('updated_at', $startDate)
+            ->where('parent_id',$filter_parent_name)
+            ->orWhere('parent_id',$filter_student_name)
+            ->where('isPay',1)
+            ->latest('updated_at')
+            ->paginate();
 
-    $loans = $query->latest('updated_at')->paginate();
-
-    return view('loan.report.outflows', compact('loans'))->with('i');
-}
-    public function inflowsSearch(Request $request)
-    {
-        $days           = $request->days;
-        $student_name   = $request->student_name;
-        $parent_name    = $request->parent_name;
-        $nim            = $request->nim;        
-        
-
-        if ($days == 'today' || $days == '7' || $days == '30' || $days == '60') {
-            $startDate = Carbon::now()->subDays($days == 'today' ? 0 : (int)$days);
-            $query = InstallmentPayment::whereDate('updated_at', '>=', $startDate);
-        } else {
-            $query = InstallmentPayment::where('isPay', 1);
+        }elseif($days == '7'){        
+            $startDate  = Carbon::now()->subDays(7);
+            $installment_payments  = InstallmentPayment::whereDate('updated_at', '>=', $startDate)
+            ->where('parent_id',$filter_parent_name)
+            ->orWhere('parent_id',$filter_student_name)
+            ->where('isPay',1)
+            ->latest('updated_at')->paginate();
+        }elseif($days == '30'){
+            $startDate  = Carbon::now()->subDays(30);
+            $installment_payments  = InstallmentPayment::whereDate('updated_at', '>=', $startDate)
+            ->where('parent_id',$filter_parent_name)
+            ->orWhere('parent_id',$filter_student_name)
+            ->where('isPay',1)
+            ->latest('updated_at')->paginate();
+        }elseif($days == '60'){
+            $startDate  = Carbon::now()->subDays(60);
+            $installment_payments  = InstallmentPayment::whereDate('updated_at', '>=', $startDate)
+            ->where('parent_id',$filter_parent_name)
+            ->orWhere('parent_id',$filter_student_name)
+            ->where('isPay',1)
+            ->latest('updated_at')->paginate();
+        }else{
+            $installment_payments  = InstallmentPayment::where('isPay',1)->latest('updated_at')->paginate();
         }
-        
-        if ($parent_name !== null) {
-            $query->where('parent_id', $parent_name);
-        }
-        
-        if ($nim !== null) {
-            $query->orWhere('nim', $nim);
-        }
-        
-        if ($student_name !== null) {
-            $query->orWhere('student_id', $student_name);
-        }
-    
-        $installment_payments = $query->latest('updated_at')->paginate();
-    
-        return view('loan.report.inflows', compact('installment_payments'))->with('i');
+            return view('loan.report.inflows',compact('installment_payments','students','parents'))->with('i');
     }
     
 }

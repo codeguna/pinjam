@@ -15,10 +15,7 @@
                                 <h5>
                                     <strong>Filter:</strong>
                                 </h5>
-                                <form action="{{ route('admin.loans.outflows.search') }}" method="GET">
-                                    @csrf
-
-                                    {{-- <div class="btn-group" data-toggle="buttons">
+                                {{-- <div class="btn-group" data-toggle="buttons">
                                         <label class="btn btn-outline-primary">
                                             <input type="radio" name="filter" style="display: none;" value="all">
                                             <i class="fa fa-list" aria-hidden="true"></i> Semua
@@ -38,17 +35,19 @@
                                     </div> --}}
                             </div>
                             <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Nama Orang Tua:</label>
-                                    <select class="form-control" name="parent_name">
-                                        <option disabled selected>== Pilih Nama Orang Tua ==</option>
-                                        @foreach ($parents as $parent)
-                                            <option value="{{ $parent->id }}">
-                                                {{ $parent->name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
+                                <form action="{{ route('admin.loans.outflows.search') }}" method="GET">
+                                    @csrf
+                                    <div class="form-group">
+                                        <label>Nama Orang Tua:</label>
+                                        <select class="form-control" name="parent_name">
+                                            <option disabled selected>== Pilih Nama Orang Tua ==</option>
+                                            @foreach ($parents as $parent)
+                                                <option value="{{ $parent->id }}">
+                                                    {{ $parent->user->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -66,7 +65,8 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label>NIM Mahasiswa:</label>
-                                    <input type="text" class="form-control" name="nim" placeholder="1234567890">
+                                    <input type="number" min="0" class="form-control" name="nim"
+                                        placeholder="1234567890" disabled>
                                 </div>
                             </div>
                             <div class="col-md-12">

@@ -48,7 +48,7 @@
                                             <option disabled selected>== Pilih Nama Orang Tua ==</option>
                                             @foreach ($parents as $parent)
                                                 <option value="{{ $parent->id }}">
-                                                    {{ $parent->name }}
+                                                    {{ $parent->user->name }}
                                                 </option>
                                             @endforeach
                                         </select>
@@ -70,7 +70,8 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label>NIM Mahasiswa:</label>
-                                    <input type="text" class="form-control" name="nim" placeholder="1234567890">
+                                    <input type="text" class="form-control" name="nim" placeholder="1234567890"
+                                        disabled>
                                 </div>
                             </div>
                             <div class="col-md-12">
