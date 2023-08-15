@@ -383,30 +383,36 @@ class LoanController extends Controller
 
         if($days == 'today'){  
             $startDate  = Carbon::today();     
-            $installment_payments  = InstallmentPayment::whereDate('updated_at', $startDate)
-            ->where('parent_id',$filter_parent_name)
+            $installment_payments  = InstallmentPayment::where('parent_id',$filter_parent_name)
             ->orWhere('parent_id',$filter_student_name)
+            ->whereDate('updated_at', $startDate)            
             ->where('isPay',1)
             ->latest('updated_at')
             ->paginate();
 
         }elseif($days == '7'){        
             $startDate  = Carbon::now()->subDays(7);
-            $installment_payments  = InstallmentPayment::whereDate('updated_at', '>=', $startDate)
+            $installment_payments  = InstallmentPayment::where('parent_id',$filter_parent_name)
+            ->orWhere('parent_id',$filter_student_name)
+            ->whereDate('updated_at', '>=', $startDate)
             ->where('parent_id',$filter_parent_name)
             ->orWhere('parent_id',$filter_student_name)
             ->where('isPay',1)
             ->latest('updated_at')->paginate();
         }elseif($days == '30'){
             $startDate  = Carbon::now()->subDays(30);
-            $installment_payments  = InstallmentPayment::whereDate('updated_at', '>=', $startDate)
+            $installment_payments  = InstallmentPayment::where('parent_id',$filter_parent_name)
+            ->orWhere('parent_id',$filter_student_name)
+            ->whereDate('updated_at', '>=', $startDate)
             ->where('parent_id',$filter_parent_name)
             ->orWhere('parent_id',$filter_student_name)
             ->where('isPay',1)
             ->latest('updated_at')->paginate();
         }elseif($days == '60'){
             $startDate  = Carbon::now()->subDays(60);
-            $installment_payments  = InstallmentPayment::whereDate('updated_at', '>=', $startDate)
+            $installment_payments  = InstallmentPayment::where('parent_id',$filter_parent_name)
+            ->orWhere('parent_id',$filter_student_name)
+            ->whereDate('updated_at', '>=', $startDate)
             ->where('parent_id',$filter_parent_name)
             ->orWhere('parent_id',$filter_student_name)
             ->where('isPay',1)
