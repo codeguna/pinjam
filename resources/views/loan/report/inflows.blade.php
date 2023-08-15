@@ -128,7 +128,8 @@
 
                                         </h5>
                                         <h6>
-                                            <i class="fa fa-check-circle text-success" aria-hidden="true"></i> Diterima
+                                            <i class="fa fa-check-circle text-success" aria-hidden="true"></i>
+                                            <strong>Diterima</strong>
                                         </h6>
                                     </div>
                                     <div class="col-md-12">

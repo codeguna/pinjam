@@ -112,8 +112,15 @@
                                                 {{ ++$i }}. Pinjaman
                                             </strong>
                                         </h5>
-                                        <h6>Pengajuan Pinjaman | <i class="fa fa-user-circle" aria-hidden="true"></i>
-                                            {{ $loan->studentParent->user->name }}</h6>
+                                        <h6>Pengajuan Pinjaman</h6> <br>
+                                        <p>
+                                            <i class="fa fa-user-circle" aria-hidden="true"></i>
+                                            {{ $loan->studentParent->user->name }} (Orang Tua) <br>
+                                            <small>
+                                                <i class="fa fa-child" aria-hidden="true"></i>
+                                                {{ $loan->studentParent->student->name }} (Mahasiswa)
+                                            </small>
+                                        </p>
                                         <p><i class="fas fa-clock"></i> {{ $formattedDate }}</p>
                                     </div>
                                     <div class="col-md-4">
