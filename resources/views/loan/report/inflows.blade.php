@@ -34,6 +34,38 @@
                                     </label>
                                 </div>
                             </div> --}}
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Nama Orang Tua:</label>
+                                    <select class="form-control" name="parent_name">
+                                        <option disabled selected>== Pilih Nama Orang Tua ==</option>
+                                        @foreach ($parents as $parent)
+                                            <option value="{{ $parent->id }}">
+                                                {{ $parent->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Nama Mahasiswa:</label>
+                                    <select class="form-control" name="student_name">
+                                        <option disabled selected>== Pilih Nama Mahasiswa ==</option>
+                                        @foreach ($students as $student)
+                                            <option value="{{ $student->parent_id }}">
+                                                {{ $student->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>NIM Mahasiswa:</label>
+                                    <input type="text" class="form-control" name="nim" placeholder="1234567890">
+                                </div>
+                            </div>
                             <div class="col-md-12">
                                 <form action="{{ route('admin.loans.inflows.search') }}" method="GET">
                                     @csrf
@@ -79,8 +111,15 @@
                                                 {{ ++$i }}. Pinjaman
                                             </strong>
                                         </h5>
-                                        <h6>Pembayaran Pinjaman | <i class="fa fa-user-circle" aria-hidden="true"></i>
-                                            {{ $payment->studentParent->user->name }}</h6>
+                                        <h6>Pembayaran Pinjaman</h6>
+                                        <p>
+                                            <i class="fa fa-user-circle" aria-hidden="true"></i>
+                                            {{ $payment->studentParent->user->name }} (Orang Tua) <br>
+                                            <small>
+                                                <i class="fa fa-child" aria-hidden="true"></i>
+                                                {{ $payment->studentParent->student->name }} (Mahasiswa)
+                                            </small>
+                                        </p>
                                         <p><i class="fas fa-clock"></i> {{ $formattedDate }}</p>
                                     </div>
                                     <div class="col-md-4">

@@ -323,12 +323,21 @@ class LoanController extends Controller
     }
 
     public function outflows(){
+        $parents        = StudentParent::pluck('name','id');
+        $students       = Student::pluck('name','parent_id');
         $loans  = Loan::latest('updated_at')->paginate();
-        return view('loan.report.outflows',compact('loans'))->with('i');
+        return view('loan.report.outflows',compact('loans','parents','students'))->with('i');
     }
     public function inflows(){
+
+        $parents        = User::select('id', 'name')
+                            ->whereHas('roles', function ($query) {
+                                $query->where('name', 'orang_tua');
+                            })->orderBy('name')->get();
+
+        $students       = Student::select('name','parent_id')->orderBy('name')->get();
         $installment_payments  = InstallmentPayment::where('isPay',1)->latest('updated_at')->paginate();
-        return view('loan.report.inflows',compact('installment_payments'))->with('i');
+        return view('loan.report.inflows',compact('installment_payments','parents','students'))->with('i');
     }
     public function outflowsSearch(Request $request)
 {
@@ -336,7 +345,7 @@ class LoanController extends Controller
     $student_name   = $request->student_name;
     $parent_name    = $request->parent_name;
     $nim            = $request->nim;
-
+    
     $startDate = null;
 
     if (in_array($days, ['today', '7', '30', '60'])) {
@@ -356,7 +365,7 @@ class LoanController extends Controller
         $days           = $request->days;
         $student_name   = $request->student_name;
         $parent_name    = $request->parent_name;
-        $nim            = $request->nim;
+        $nim            = $request->nim;        
 
         if ($days == 'today' || $days == '7' || $days == '30' || $days == '60') {
             $startDate = Carbon::now()->subDays($days == 'today' ? 0 : (int)$days);

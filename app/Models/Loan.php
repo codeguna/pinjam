@@ -66,6 +66,10 @@ class Loan extends Model
   {
     return $this->belongsTo('App\Models\StudentParent', 'parent_id', 'id');
   }
+  public function student()
+  {
+    return $this->belongsTo('App\Models\Student', 'parent_id');
+  }
 
   public function installmentPayment()
   {
