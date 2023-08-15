@@ -11,6 +11,11 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="row">
+                            <div class="col-sm-12">
+                                <h5>
+                                    <strong>Filter:</strong>
+                                </h5>
+                            </div>
                             {{-- <div class="col-sm-12">
                                 <h5>
                                     <strong>Filter:</strong>
